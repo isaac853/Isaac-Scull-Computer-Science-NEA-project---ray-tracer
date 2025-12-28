@@ -95,6 +95,22 @@ namespace isaac::math
 
             return result;
         }
+
+        /// @brief dot vector with another vector
+        /// @param vec Other vector
+        /// @param result Resulting scalar
+        floating dot(Vector3 &vec)
+        {
+            // multiplication
+            const floating v0 = v[0] * vec.v[0];
+            const floating v1 = v[1] * vec.v[1];
+            const floating v2 = v[2] * vec.v[2];
+
+            // addition
+            const floating result = v0 + v1 + v2;
+            
+            return result;
+        }        
     };
 
 } // namespace isaac::math
