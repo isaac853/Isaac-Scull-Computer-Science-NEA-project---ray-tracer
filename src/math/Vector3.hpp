@@ -27,12 +27,12 @@ namespace isaac::math
             v[2] = z;
         }
 
-        /// @brief Dot product with another vector
+        /// @brief multiply vector with another vector
         /// @param vec Other vector
         /// @param result Resulting Vector3
-        Vector3 &dot(Vector3 &vec, Vector3 &result)
+        Vector3 &mul(Vector3 &vec, Vector3 &result)
         {
-            // Dot product
+            // multiplication
             const floating v0 = v[0] * vec.v[0];
             const floating v1 = v[1] * vec.v[1];
             const floating v2 = v[2] * vec.v[2];
@@ -45,6 +45,7 @@ namespace isaac::math
             return result;
         }
 
+        // TODO check me
         /// @brief Cross product with another vector
         /// @param vec Other vector
         /// @param result Resulting Vector3
