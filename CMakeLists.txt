@@ -16,6 +16,7 @@ enable_testing()
 
 # App target
 add_executable(cpp_renderer src/main.cpp)
+target_compile_options(cpp_renderer PRIVATE -g -O0)
 target_compile_features(cpp_renderer PRIVATE cxx_std_17)
 
 # Find SDL2 from the specified version
@@ -99,6 +100,7 @@ if(BUILD_TESTS)
     file(GLOB_RECURSE TEST_SOURCES "tests/**/*.cpp" "tests/*.cpp")
     
     add_executable(tests ${TEST_SOURCES})
+    target_compile_options(tests PRIVATE -g -O0)
     target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
     target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_test(NAME unit_tests COMMAND tests)

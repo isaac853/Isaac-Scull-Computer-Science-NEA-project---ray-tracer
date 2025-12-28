@@ -91,7 +91,10 @@ mingw-w64-ucrt-x86_64-zstd 1.5.7-1
 ```
 
 ```bash
-$ cmake -G "Ninja" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_MAKE_PROGRAM=/ucrt64/bin/ninja.exe -B build
+$ mkdir build
+$ cmake -G "Ninja" -DCMAKE_POLICY_VERSION_MINIMUM="3.5" -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_CXX_COMPILER=g++  -B build
+$ cd build
+$ ninja
 ```
 
 Quick start (Ubuntu):
