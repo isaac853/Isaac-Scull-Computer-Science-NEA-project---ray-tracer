@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "${workspaceFolder}/build"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "CMake: Configure",
+            "type": "shell",
+            "command": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug",
+            "presentation": { "reveal": "always" }
+        },
+        {
+            "label": "CMake: Build",
+            "type": "shell",
+            "command": "cmake --build build --config Debug",
+            "presentation": { "reveal": "always" }
+        },
+        {
+            "label": "Run: app",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/cpp_renderer",
+            "presentation": { "reveal": "always" }
+        },
+        {
+            "label": "Run: tests",
+            "type": "shell",
+            "command": "ctest --test-dir build --output-on-failure",
+            "presentation": { "reveal": "always" }
+        }
+    ]
+}
