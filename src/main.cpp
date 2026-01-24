@@ -195,6 +195,7 @@ int main(int argc, char** argv) {
         ImGui::NewFrame();
 
         // Show demo window
+        // TODO - To get rid of the demo window delete the three lines below here:
         if (show_demo_window) {
             ImGui::ShowDemoWindow(&show_demo_window);
         }
@@ -254,6 +255,13 @@ int main(int argc, char** argv) {
                 // Update and display the canvas texture
                 canvas.UpdateTexture();
                 ImGui::Image((void*)(intptr_t)canvas.texture_id, ImVec2(512, 512), ImVec2(0, 1), ImVec2(1, 0));
+                
+                ImGui::Separator();
+
+                // Render Button 
+                if (ImGui::Button("Render", ImVec2(0, 0))) {
+                    // TODO this should render a frame
+                }
 
                 ImGui::Separator();
                 ImGui::Text("Drawing Tools:");
