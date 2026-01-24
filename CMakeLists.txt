@@ -15,7 +15,10 @@ include(GNUInstallDirs)
 enable_testing()
 
 # App target
-add_executable(cpp_renderer src/main.cpp)
+add_executable(cpp_renderer
+  src/PixelCanvas.cpp
+  src/main.cpp
+)
 target_compile_options(cpp_renderer PRIVATE -g -O0)
 target_compile_features(cpp_renderer PRIVATE cxx_std_17)
 
