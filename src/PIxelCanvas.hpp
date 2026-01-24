@@ -1,14 +1,8 @@
 #pragma once
 
-// #include <iostream>
 #include <vector>
-// #include <cstring>
 #include <cstdint>
-// #include <SDL.h>
 #include <GL/gl.h>
-// #include <imgui.h>
-// #include <imgui_impl_sdl2.h>
-// #include <imgui_impl_opengl3.h>
 
 
 // Simple RGB pixel buffer class
