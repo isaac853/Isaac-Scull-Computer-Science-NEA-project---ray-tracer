@@ -11,6 +11,7 @@
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
 #include "PixelCanvas.hpp"
+#include "ray_tracer/RayTracer.hpp"
 
 // Canvas parameters
 const int CANVAS_WIDTH = 512;
@@ -76,14 +77,16 @@ int main(int argc, char** argv) {
     static int counter = 0;
     static char text_input[256] = "Type something...";
 
-        // Canvas setup
-        PixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        canvas.Clear(32, 32, 64); // Dark blue background
-    
-        // Draw some demo patterns
-        canvas.DrawCircle(128, 128, 50, 255, 0, 0);     // Red circle
-        canvas.DrawCircle(384, 128, 50, 0, 255, 0);     // Green circle
-        canvas.DrawLine(256, 50, 256, 462, 255, 255, 0); // Yellow vertical line
+    // Canvas setup
+    PixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    canvas.Clear(32, 32, 64); // Dark blue background
+
+    // Draw some demo patterns
+    canvas.DrawCircle(128, 128, 50, 255, 0, 0);     // Red circle
+    canvas.DrawCircle(384, 128, 50, 0, 255, 0);     // Green circle
+    canvas.DrawLine(256, 50, 256, 462, 255, 255, 0); // Yellow vertical line
+
+    isaac::ray_tracer::RayTracer rayTracer;
 
     // Main loop
     bool running = true;
@@ -171,7 +174,8 @@ int main(int argc, char** argv) {
 
                 // Render Button 
                 if (ImGui::Button("Render", ImVec2(0, 0))) {
-                    // TODO this should render a frame
+                    // Render a frame
+                    rayTracer.render(canvas);
                 }
 
                 ImGui::Separator();

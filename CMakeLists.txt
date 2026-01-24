@@ -17,6 +17,7 @@ enable_testing()
 # App target
 add_executable(cpp_renderer
   src/PixelCanvas.cpp
+  src/ray_tracer/RayTracer.cpp
   src/main.cpp
 )
 target_compile_options(cpp_renderer PRIVATE -g -O0)
