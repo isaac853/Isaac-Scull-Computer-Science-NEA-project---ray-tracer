@@ -81,3 +81,13 @@ void PixelCanvas::DrawCircle(int cx, int cy, int radius, uint8_t r, uint8_t g, u
         }
     }
 }
+
+void PixelCanvas::forEach(std::function<void(int x, int y, int w, int h, uint8_t &r, uint8_t &g, uint8_t &b)> callback){
+    for (int i=0; i<width; i++){
+        for (int j=0; j<height; j++){
+            uint8_t r, g, b;
+            callback(i,j,width,height,r,g,b);
+            SetPixel(i,j,r,g,b);
+        }    
+    }
+}

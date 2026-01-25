@@ -3,8 +3,7 @@
 #include <vector>
 #include <cstdint>
 #include <GL/gl.h>
-
-
+#include <functional>
 // Simple RGB pixel buffer class
 class PixelCanvas {
 private:
@@ -31,4 +30,6 @@ public:
     void DrawCircle(int cx, int cy, int radius, uint8_t r, uint8_t g, uint8_t b) ;
 
     GLuint get_texture_id() { return texture_id; }
+
+    void forEach(std::function<void(int x, int y, int w, int h, uint8_t &r, uint8_t &g, uint8_t &b)>);
 };
