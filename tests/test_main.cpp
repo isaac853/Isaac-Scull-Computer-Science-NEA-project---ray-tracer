@@ -10,5 +10,10 @@ using namespace isaac::ray_tracer;
 
 TEST_CASE("not a real test", "[blah]") {
     Camera c(7.0, 1.0, 1.0);
+    PixelCanvas p(3, 6);
+    RayTracer r;
+
+    c.render(p,r);
+
     REQUIRE(1 == 1);
 }
