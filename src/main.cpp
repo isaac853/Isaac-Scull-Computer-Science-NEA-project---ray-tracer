@@ -10,7 +10,7 @@
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
-#include "PixelCanvas.hpp"
+#include "GlPixelCanvas.hpp"
 #include "ray_tracer/RayTracer.hpp"
 
 // Canvas parameters
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
     static char text_input[256] = "Type something...";
 
     // Canvas setup
-    PixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    GlPixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     canvas.Clear(32, 32, 64); // Dark blue background
 
     // Draw some demo patterns

@@ -14,12 +14,17 @@ option(BUILD_TESTS "Build unit tests" ON)
 include(GNUInstallDirs)
 enable_testing()
 
-# App target
-add_executable(cpp_renderer
+set(extra_sources
   src/PixelCanvas.cpp
   src/ray_tracer/RayTracer.cpp
+  src/ray_tracer/Camera.cpp  
+)
+
+# App target
+add_executable(cpp_renderer
+  ${extra_sources}
+  src/GlPixelCanvas.cpp
   src/main.cpp
-  src/ray_tracer/Camera.cpp
 )
 target_compile_options(cpp_renderer PRIVATE -g -O0)
 target_compile_features(cpp_renderer PRIVATE cxx_std_17)
@@ -104,7 +109,10 @@ if(BUILD_TESTS)
     # Collect all test source files
     file(GLOB_RECURSE TEST_SOURCES "tests/**/*.cpp" "tests/*.cpp")
     
-    add_executable(tests ${TEST_SOURCES})
+    add_executable(tests
+        ${extra_sources}
+        ${TEST_SOURCES}
+    )
     target_compile_options(tests PRIVATE -g -O0)
     target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
     target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)

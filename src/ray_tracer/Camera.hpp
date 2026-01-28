@@ -10,9 +10,10 @@ using namespace isaac::math;
 class Camera {
    private:
     floating focalLength;
-
+    floating w;
+    floating h;
    public:
-    Camera(floating focalLength);
+    Camera(floating focalLength, floating w, floating h);
 
     void render(
         PixelCanvas& pixelCanvas,
