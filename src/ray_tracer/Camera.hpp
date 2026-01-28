@@ -1,5 +1,7 @@
 #pragma once
 #include "math/mathtypes.hpp"
+#include "PixelCanvas.hpp"
+#include "ray_tracer/RayTracer.hpp"
 
 namespace isaac::ray_tracer {
 
@@ -11,6 +13,11 @@ class Camera {
 
    public:
     Camera(floating focalLength);
+
+    void render(
+        PixelCanvas& pixelCanvas,
+        RayTracer& rayTracer
+    );
 };
 
 }  // namespace isaac::ray_tracer

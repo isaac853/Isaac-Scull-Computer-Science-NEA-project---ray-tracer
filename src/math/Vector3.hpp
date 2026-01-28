@@ -111,6 +111,27 @@ namespace isaac::math
             
             return result;
         }        
+
+        
+        /// @brief make vector into unit vector
+        /// @param result Resulting Vector3
+        Vector3 &normalise(Vector3 &result)
+        {   //asigned to existing memory locations for faster performance
+
+            const floating length = sqrt((v[0]*v[0]) + (v[1]*v[1]) + (v[2]*v[2]));
+            const floating length_reciprocal = 1.0/length;
+            // multiplication
+            const floating v0 = v[0] * length_reciprocal;
+            const floating v1 = v[1] * length_reciprocal;
+            const floating v2 = v[2] * length_reciprocal;
+
+            // Set result at the end to allow in-place multiplication
+            result.v[0] = v0;
+            result.v[1] = v1;
+            result.v[2] = v2;
+
+            return result;
+        }
     };
 
 } // namespace isaac::math
