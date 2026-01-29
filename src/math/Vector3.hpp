@@ -120,6 +120,7 @@ namespace isaac::math
 
             const floating length = sqrt((v[0]*v[0]) + (v[1]*v[1]) + (v[2]*v[2]));
             const floating length_reciprocal = 1.0/length;
+            
             // multiplication
             const floating v0 = v[0] * length_reciprocal;
             const floating v1 = v[1] * length_reciprocal;
@@ -132,6 +133,11 @@ namespace isaac::math
 
             return result;
         }
+
+        Vector3 &normalise() {
+            return normalise(*this);
+        }
+
     };
 
 } // namespace isaac::math
