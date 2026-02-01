@@ -79,8 +79,8 @@ void Camera::render(
             
             
             for(uint8_t i = 0; i < samplesPerPixel; i++){
-                const floating perturb_y = perturb();
-                const floating perturb_x = perturb();
+                const floating perturb_y = 0.0;//perturb(); // TODO put these back
+                const floating perturb_x = 0.0;//perturb();
                 
                 Vector3 path(
                     (perturb_x -cx) * scale_x,
