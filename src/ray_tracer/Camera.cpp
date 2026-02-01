@@ -50,7 +50,7 @@ inline floating perturb()
 void Camera::render(
     PixelCanvas& pixelCanvas,
     const uint8_t samplesPerPixel,
-    std::function<void(Vector3& dir, Vector3& colour)> callback // Speed ?
+    std::function<void(Vector3& dir, Vector3& colour, int x, int y)> callback // Speed ?
 ){
 
     const floating offset_x = 0.5 - (floating)pixelCanvas.get_width()*0.5;
@@ -66,7 +66,7 @@ void Camera::render(
             const floating cy = (offset_y + (floating)y);
             const floating cz = -focalLength; 
 
-            std::cout << "x=" << x << " cx=" << cx << "\n";
+            //std::cout << "x=" << x << " cx=" << cx << "\n";
 
             // TODO Over-sampling
             // TODO We probaly want to randomly perturb cx and cy, by a random number between +/-0.5
@@ -93,7 +93,7 @@ void Camera::render(
                 Vector3 tempColour;
                 
                 //gets the values for colour given a unit vector starting from origin
-                callback(path, tempColour);
+                callback(path, tempColour, x, y);
 
 
                 //cumulate colours from each sub-pixel sample

@@ -17,8 +17,8 @@ TEST_CASE("not a real test", "[blah]") {
     c.render(
         p,
         samplesPerPixel,
-        [&](Vector3& dir, Vector3& colour){
-            std::cout << dir << "\n";
+        [&](Vector3& dir, Vector3& colour, int x, int y){
+            std::cout << "(" << x << "," << y << ") " << dir << "\n";
         }
     );
 

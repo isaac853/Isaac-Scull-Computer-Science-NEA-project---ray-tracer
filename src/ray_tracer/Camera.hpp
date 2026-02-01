@@ -19,7 +19,7 @@ class Camera {
     void render(
         PixelCanvas& pixelCanvas,
         const uint8_t samplesPerPixel,
-        std::function<void(Vector3& dir, Vector3& colour)> callback
+        std::function<void(Vector3& dir, Vector3& colour, int x, int y)> callback
     );
 };
 
