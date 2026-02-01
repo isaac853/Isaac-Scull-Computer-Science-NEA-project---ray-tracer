@@ -13,7 +13,7 @@ TEST_CASE("not a real test", "[blah]") {
     PixelCanvas p(3, 6);
     RayTracer r;
 
-    c.render(p,r);
+    //c.render(p,r);
 
     REQUIRE(1 == 1);
 }

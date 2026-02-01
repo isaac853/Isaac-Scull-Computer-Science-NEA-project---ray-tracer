@@ -15,6 +15,22 @@ Camera::Camera(floating focalLength, floating w, floating h) :
 {
 }
 
+inline void scaleColourComponent(floating cc, floating cs,  uint8_t &c){
+    //scale up
+    const floating sc = cc * cs;
+    const int32_t ic = (int32_t)sc;
+    if(ic < 0){
+        c = 0;
+        return;
+    }
+
+    if(ic > 255){
+        c = 255;
+        return;
+    }
+
+    c = ic;
+}
 
 //uses xorshifting to make an almost random number really quick
 inline floating perturb()
@@ -80,15 +96,16 @@ void Camera::render(
                 callback(path, tempColour);
 
 
-                //TODO write add
-                //colour.add(tempColour)
+                //cumulate colours from each sub-pixel sample
+                colour.add(tempColour);
 
             }
 
-            r = x & 255;
-            b = y & 255;
-            g = (x + y) & 255; 
-    
+            scaleColourComponent(colour.v[0], scale_c, r);
+            scaleColourComponent(colour.v[1], scale_c, g);
+            scaleColourComponent(colour.v[2], scale_c, b);
+
+
         }
     );
 }

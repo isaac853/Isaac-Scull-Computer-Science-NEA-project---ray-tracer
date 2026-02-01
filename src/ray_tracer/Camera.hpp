@@ -2,6 +2,7 @@
 #include "math/mathtypes.hpp"
 #include "PixelCanvas.hpp"
 #include "ray_tracer/RayTracer.hpp"
+#include "math/Vector3.hpp"
 
 namespace isaac::ray_tracer {
 
