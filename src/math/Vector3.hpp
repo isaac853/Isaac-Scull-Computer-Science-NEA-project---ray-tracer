@@ -166,7 +166,13 @@ namespace isaac::math
             return normalise(*this);
         }
 
-    };
+        inline Vector3& operator=(const Vector3& other){
+            v[0] = other.v[0];
+            v[1] = other.v[1];
+            v[2] = other.v[2];            
+            return *this;
+        }
+    }; //end of veCtor3
 
     // Why should I use <iostream> instead of the traditional <cstdio>?
     //
@@ -185,4 +191,5 @@ namespace isaac::math
             << ")";
         return os;
     }
+
 } // namespace isaac::math

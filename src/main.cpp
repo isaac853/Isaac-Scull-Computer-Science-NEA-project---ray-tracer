@@ -12,6 +12,7 @@
 #include <imgui_impl_opengl3.h>
 #include "GlPixelCanvas.hpp"
 #include "ray_tracer/RayTracer.hpp"
+#include "ray_tracer/Camera.hpp"
 
 // Canvas parameters
 const int CANVAS_WIDTH = 512;
@@ -81,6 +82,10 @@ int main(int argc, char** argv) {
     GlPixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     canvas.Clear(32, 32, 64); // Dark blue background
 
+    //make a camera with focal length to size ratio similar to human eye
+    isaac::ray_tracer::Camera camera(0.96, 1.0, 1.0);
+    const int32_t samplesPerPixel = 1; // TODO make this a variable and put it on a slider
+    
     // Draw some demo patterns
     canvas.DrawCircle(128, 128, 50, 255, 0, 0);     // Red circle
     canvas.DrawCircle(384, 128, 50, 0, 255, 0);     // Green circle
@@ -175,7 +180,13 @@ int main(int argc, char** argv) {
                 // Render Button 
                 if (ImGui::Button("Render", ImVec2(0, 0))) {
                     // Render a frame
-                    rayTracer.render(canvas);
+                    camera.render(
+                        canvas,
+                        samplesPerPixel,
+                        [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
+                            rayTracer.render(dir, colour);
+                        }
+                    );                    
                 }
 
                 ImGui::Separator();
