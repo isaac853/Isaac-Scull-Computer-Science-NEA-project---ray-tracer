@@ -172,6 +172,22 @@ namespace isaac::math
             v[2] = other.v[2];            
             return *this;
         }
+
+        /// @brief square vector
+        /// @param result Resulting Vector3
+        Vector3 &squared(Vector3 &result)
+        {   //asigned to existing memory locations for faster performance
+            return mul(*this, result);
+        }
+
+        /// @brief square vector
+        Vector3 &squared()
+        {   //asigned to existing memory locations for faster performance
+            return squared(*this);
+        }
+
+
+
     }; //end of veCtor3
 
     // Why should I use <iostream> instead of the traditional <cstdio>?
