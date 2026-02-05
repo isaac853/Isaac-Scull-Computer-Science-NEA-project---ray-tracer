@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
 
     //make a camera with focal length to size ratio similar to human eye
     isaac::ray_tracer::Camera camera(0.96, 1.0, 1.0);
-    const int32_t samplesPerPixel = 1; // TODO make this a variable and put it on a slider
+    const int32_t samplesPerPixel = 4; // TODO make this a variable and put it on a slider
     
     // Draw some demo patterns
     canvas.DrawCircle(128, 128, 50, 255, 0, 0);     // Red circle
