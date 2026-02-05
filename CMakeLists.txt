@@ -18,6 +18,7 @@ set(extra_sources
   src/PixelCanvas.cpp
   src/ray_tracer/RayTracer.cpp
   src/ray_tracer/Camera.cpp  
+  src/ray_tracer/Renderable.cpp
 )
 
 # App target
