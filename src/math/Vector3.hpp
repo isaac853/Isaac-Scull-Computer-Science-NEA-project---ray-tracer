@@ -47,6 +47,28 @@ namespace isaac::math
             return result;
         }
 
+        /// @brief multiply vector with another vector
+        /// @param vec Other vector
+        /// @param result Resulting Vector3
+        Vector3 &mul(floating scalar, Vector3 &result)
+        {
+            // multiplication
+            const floating v0 = v[0] * scalar;
+            const floating v1 = v[1] * scalar;
+            const floating v2 = v[2] * scalar;
+
+            // Set result at the end to allow in-place multiplication
+            result.v[0] = v0;
+            result.v[1] = v1;
+            result.v[2] = v2;
+
+            return result;
+        }
+
+        floating lengthSquared(){
+            return v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
+        }
+
         // TODO check me
         /// @brief Cross product with another vector
         /// @param vec Other vector
@@ -124,6 +146,32 @@ namespace isaac::math
             return result;
         }
 
+        /// @brief Translate this vector by a 4x3 matrix (affine transform)
+        /// @param m Matrix4x3 to multiply by
+        /// @param result Resulting Vector3
+        Vector3 &trans(Matrix4x3 &m, Vector3 &result)
+        {
+            const floating(&r)[4][3] = m.v;
+
+            const floating v0 =
+                r[3][0];
+
+            const floating v1 =
+                r[3][1];
+
+            const floating v2 =
+                r[3][2];
+
+            // Set result at the end to allow in-place multiplication
+            result.v[0] = v0;
+            result.v[1] = v1;
+            result.v[2] = v2;
+
+            return result;
+        }
+
+
+
         /// @brief dot vector with another vector
         /// @param vec Other vector
         /// @param result Resulting scalar
@@ -186,9 +234,38 @@ namespace isaac::math
             return squared(*this);
         }
 
+        // TODO Comment me
+        // Just do the vetor rotation (not translation)
+        // Useful for transforming direction vectors
+        Vector3 rot( Matrix4x3& m, Vector3& result )
+        {
+            const floating(&r)[4][3] = m.v;
+
+            floating v0 =
+            r[ 0 ][ 0 ] * v[ 0 ] +
+            r[ 1 ][ 0 ] * v[ 1 ] +
+            r[ 2 ][ 0 ] * v[ 2 ];
+
+            floating v1 =
+            r[ 0 ][ 1 ] * v[ 0 ] +
+            r[ 1 ][ 1 ] * v[ 1 ] +
+            r[ 2 ][ 1 ] * v[ 2 ];
+
+            floating v2 =
+            r[ 0 ][ 2 ] * v[ 0 ] +
+            r[ 1 ][ 2 ] * v[ 1 ] +
+            r[ 2 ][ 2 ] * v[ 2 ];
+
+            v[ 0 ] = v0;
+            v[ 1 ] = v1;
+            v[ 2 ] = v2;
+
+            return result;
+        }
 
 
-    }; //end of veCtor3
+    // ---------------------------------------------------------------------------------------------------------
+    }; //end of Vector3
 
     // Why should I use <iostream> instead of the traditional <cstdio>?
     //
@@ -207,5 +284,6 @@ namespace isaac::math
             << ")";
         return os;
     }
+
 
 } // namespace isaac::math

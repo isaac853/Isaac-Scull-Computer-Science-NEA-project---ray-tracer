@@ -19,6 +19,7 @@ set(extra_sources
   src/ray_tracer/RayTracer.cpp
   src/ray_tracer/Camera.cpp  
   src/ray_tracer/Renderable.cpp
+  src/ray_tracer/objects/RenderableSphere.cpp
 )
 
 # App target

@@ -45,6 +45,18 @@ namespace isaac::math
         {
         }
 
+        // Copy constructor
+        inline Transform& operator=(const Transform& other){
+            qx = other.qx;
+            qy = other.qy;
+            qz = other.qz;
+            qw = other.qw;
+            tx = other.tx;
+            ty = other.ty;
+            tz = other.tz;
+            return *this;
+        }
+
         /// @brief Set rotation from axis-angle representation
         /// @param ux X component of rotation axis (should be normalized)
         /// @param uy Y component of rotation axis (should be normalized)
