@@ -40,6 +40,11 @@ class Sphere {
 
     }
 
+    inline Sphere& operator=(const Sphere& other){
+        radius = other.radius;
+        radiusSquared = other.radiusSquared;
+        return *this;
+    }
 };
 
 }  // namespace isaac::math

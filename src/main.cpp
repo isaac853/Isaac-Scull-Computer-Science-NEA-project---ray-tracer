@@ -13,6 +13,7 @@
 #include "GlPixelCanvas.hpp"
 #include "ray_tracer/RayTracer.hpp"
 #include "ray_tracer/Camera.hpp"
+#include "ray_tracer/objects/RenderableSphere.hpp"
 
 // Canvas parameters
 const int CANVAS_WIDTH = 512;
@@ -92,6 +93,14 @@ int main(int argc, char** argv) {
     canvas.DrawLine(256, 50, 256, 462, 255, 255, 0); // Yellow vertical line
 
     isaac::ray_tracer::RayTracer rayTracer;
+
+    // Temp stuff to view
+    isaac::math::Transform t1;
+    t1.tz = 8.0;
+    isaac::math::Sphere s1(20.0);
+    isaac::ray_tracer::RenderableSphere rs1(t1, s1);
+    rayTracer.add(&rs1);
+
 
     // Main loop
     bool running = true;

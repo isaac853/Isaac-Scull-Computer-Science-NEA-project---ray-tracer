@@ -256,9 +256,9 @@ namespace isaac::math
             r[ 1 ][ 2 ] * v[ 1 ] +
             r[ 2 ][ 2 ] * v[ 2 ];
 
-            v[ 0 ] = v0;
-            v[ 1 ] = v1;
-            v[ 2 ] = v2;
+            result.v[ 0 ] = v0;
+            result.v[ 1 ] = v1;
+            result.v[ 2 ] = v2;
 
             return result;
         }

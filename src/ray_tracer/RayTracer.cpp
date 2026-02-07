@@ -9,7 +9,7 @@ namespace isaac::ray_tracer {
         Vector3 red(1.0, 0.0, 0.0);
         Vector3 r;
         Vector3 start;
-        bool anyhit = true;
+        bool anyhit = false;
         // std::cout << dir << "\n";
         //loops through renderable list
         for(Renderable* renderable:renderables){
