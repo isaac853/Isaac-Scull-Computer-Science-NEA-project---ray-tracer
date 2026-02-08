@@ -23,6 +23,9 @@ namespace isaac::ray_tracer {
         colour = scale.mul(dir.squared(), r);
     
         if(nearest != NULL){
+            Vector3 intPoint;
+            dir.mul(mink, intPoint);
+            intPoint.add(start);
             colour = red;
         }
     }
