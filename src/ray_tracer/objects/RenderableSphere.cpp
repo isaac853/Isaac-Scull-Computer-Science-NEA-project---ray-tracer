@@ -5,8 +5,8 @@ using namespace isaac::math;
 
 RenderableSphere::RenderableSphere(Transform& t, Sphere& s) : Renderable(t), sphere(s) {}
 
-bool RenderableSphere::intersectsObject(Vector3& start, Vector3& dir, Vector3& result) {
-    return sphere.intersects(start, dir, result);
+floating RenderableSphere::intersectsObject(Vector3& start, Vector3& dir) {
+    return sphere.intersects(start, dir);
 }
 
 }  // namespace isaac::ray_tracer

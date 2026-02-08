@@ -10,7 +10,7 @@ class RenderableSphere : public Renderable {
 
    public:
     RenderableSphere(Transform& t, Sphere& s);
-    virtual bool intersectsObject(Vector3& start, Vector3& dir, Vector3& result);
+    virtual floating intersectsObject(Vector3& start, Vector3& dir);
 };
 
 }  // namespace isaac::ray_tracer

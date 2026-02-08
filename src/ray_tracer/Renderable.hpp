@@ -21,8 +21,8 @@ namespace isaac::ray_tracer{
 
             //trying to apply inverse transforms to rays instead of transforming objects
             //objects are hard to transform as they have lotss of components
-            virtual bool intersectsObject(Vector3 &start, Vector3 &dir, Vector3 &result);
-            bool intersects(Vector3 &start, Vector3 &dir, Vector3 &result);
+            virtual floating intersectsObject(Vector3 &start, Vector3 &dir);
+            floating intersects(Vector3 &start, Vector3 &dir);
     
     };
 }

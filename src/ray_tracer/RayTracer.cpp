@@ -9,17 +9,20 @@ namespace isaac::ray_tracer {
         Vector3 red(1.0, 0.0, 0.0);
         Vector3 r;
         Vector3 start;
-        bool anyhit = false;
         // std::cout << dir << "\n";
         //loops through renderable list
+        Renderable* nearest = NULL;
+        floating mink = -1.0;
         for(Renderable* renderable:renderables){
-            Vector3 intersectionPoint;
-            const bool hit = renderable->intersects(start, dir, intersectionPoint);
-            anyhit |= hit;
+            const floating k = renderable->intersects(start, dir);
+            if (k >= 0.0 && (nearest == NULL || k < mink)){
+                mink = k;
+                nearest = renderable;
+            }
         }
         colour = scale.mul(dir.squared(), r);
     
-        if(anyhit){
+        if(nearest != NULL){
             colour = red;
         }
     }
