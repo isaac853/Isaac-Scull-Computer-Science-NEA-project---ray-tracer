@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
     // Temp stuff to view
     isaac::math::Transform t1;
     t1.tz = 8.0;
-    isaac::math::Sphere s1(20.0);
+    isaac::math::Sphere s1(1.0);
     isaac::ray_tracer::RenderableSphere rs1(t1, s1);
     rayTracer.add(&rs1);
 

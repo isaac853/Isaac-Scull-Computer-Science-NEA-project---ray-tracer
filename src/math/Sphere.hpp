@@ -9,35 +9,20 @@ class Sphere {
    public:
    //sphere radius r about (0,0,0)
     Sphere(floating r) : radius(r), radiusSquared(r*r) {}
-
-    inline bool intersects(Vector3 &start, Vector3 &dir, Vector3 &result){
-        // to find if the vector intersects the sphere, see where it intersects a plane perpendicular to start, 
-        // containing the center of the sphere (0,0,0),
-        // and compare intersection point to length of radius
-        // TODO include workings for the maths 
-        
-        
+    
+    inline floating descriminantcalc(Vector3 &start, Vector3 &dir){
         const floating knum = start.lengthSquared();
         const floating kden = start.dot(dir);
 
-        Vector3 pkden1;
-        start.mul(kden, pkden1);
+        //desc = b^2 - 4ac
 
-        Vector3 pkden2;
-        dir.mul(knum, pkden2);
+        floating descByFour = kden*kden - knum + radiusSquared;
+        return descByFour;
+    }
 
-        Vector3 pkden;
-        pkden1.add(pkden2, pkden);
-
-        const floating modpkdenSquared = pkden.lengthSquared();
-        const floating modrkdenSquared = radiusSquared * kden*kden;
-        
-        //compare to see if intersects
-        const bool r = modpkdenSquared <= modrkdenSquared;
-
-        //TODO, find p if it does intersect
-        return r;
-
+    inline bool intersects(Vector3 &start, Vector3 &dir, Vector3 &result){      
+        const floating descByFour = descriminantcalc(start, dir);
+        return descByFour >= 0;
     }
 
     inline Sphere& operator=(const Sphere& other){
@@ -45,6 +30,7 @@ class Sphere {
         radiusSquared = other.radiusSquared;
         return *this;
     }
+
 };
 
 }  // namespace isaac::math
