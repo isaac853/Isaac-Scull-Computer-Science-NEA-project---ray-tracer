@@ -47,6 +47,7 @@ inline floating perturb()
     return state * inv - 0.5;                             // This happens at run time
 }
 
+//camera render translates the pixel canvas into pixels with all the vectors we need, and gives to the raytracer render (callback)
 void Camera::render(
     PixelCanvas& pixelCanvas,
     const uint8_t samplesPerPixel,

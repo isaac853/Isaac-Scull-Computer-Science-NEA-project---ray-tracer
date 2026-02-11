@@ -15,6 +15,7 @@ include(GNUInstallDirs)
 enable_testing()
 
 set(extra_sources
+  src/ray_tracer/Material.cpp
   src/PixelCanvas.cpp
   src/ray_tracer/RayTracer.cpp
   src/ray_tracer/Camera.cpp  
