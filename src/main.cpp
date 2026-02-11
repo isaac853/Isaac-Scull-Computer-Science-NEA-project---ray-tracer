@@ -10,8 +10,10 @@
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
-#include "PixelCanvas.hpp"
+#include "GlPixelCanvas.hpp"
 #include "ray_tracer/RayTracer.hpp"
+#include "ray_tracer/Camera.hpp"
+#include "ray_tracer/objects/RenderableSphere.hpp"
 
 // Canvas parameters
 const int CANVAS_WIDTH = 512;
@@ -78,15 +80,27 @@ int main(int argc, char** argv) {
     static char text_input[256] = "Type something...";
 
     // Canvas setup
-    PixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    GlPixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     canvas.Clear(32, 32, 64); // Dark blue background
 
+    //make a camera with focal length to size ratio similar to human eye
+    isaac::ray_tracer::Camera camera(0.96, 1.0, 1.0);
+    const int32_t samplesPerPixel = 4; // TODO make this a variable and put it on a slider
+    
     // Draw some demo patterns
     canvas.DrawCircle(128, 128, 50, 255, 0, 0);     // Red circle
     canvas.DrawCircle(384, 128, 50, 0, 255, 0);     // Green circle
     canvas.DrawLine(256, 50, 256, 462, 255, 255, 0); // Yellow vertical line
 
     isaac::ray_tracer::RayTracer rayTracer;
+
+    // Temp stuff to view
+    isaac::math::Transform t1;
+    t1.tz = 8.0;
+    isaac::math::Sphere s1(1.0);
+    isaac::ray_tracer::RenderableSphere rs1(t1, s1);
+    rayTracer.add(&rs1);
+
 
     // Main loop
     bool running = true;
@@ -175,7 +189,13 @@ int main(int argc, char** argv) {
                 // Render Button 
                 if (ImGui::Button("Render", ImVec2(0, 0))) {
                     // Render a frame
-                    rayTracer.render(canvas);
+                    camera.render(
+                        canvas,
+                        samplesPerPixel,
+                        [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
+                            rayTracer.render(dir, colour);
+                        }
+                    );                    
                 }
 
                 ImGui::Separator();

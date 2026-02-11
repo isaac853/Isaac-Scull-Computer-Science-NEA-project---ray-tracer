@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstddef>
+#include <iostream>
+
 #include "mathtypes.hpp"
 #include "Matrix4x3.hpp"
 
@@ -45,6 +47,28 @@ namespace isaac::math
             return result;
         }
 
+        /// @brief multiply vector with another vector
+        /// @param vec Other vector
+        /// @param result Resulting Vector3
+        Vector3 &mul(floating scalar, Vector3 &result)
+        {
+            // multiplication
+            const floating v0 = v[0] * scalar;
+            const floating v1 = v[1] * scalar;
+            const floating v2 = v[2] * scalar;
+
+            // Set result at the end to allow in-place multiplication
+            result.v[0] = v0;
+            result.v[1] = v1;
+            result.v[2] = v2;
+
+            return result;
+        }
+
+        floating lengthSquared(){
+            return v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
+        }
+
         // TODO check me
         /// @brief Cross product with another vector
         /// @param vec Other vector
@@ -62,6 +86,32 @@ namespace isaac::math
 
             return result;
         }
+
+        /// @brief add vector with another vector
+        /// @param vec Other vector
+        /// @param result Resulting Vector3
+        Vector3 &add(Vector3 &vec, Vector3 &result)
+        {
+            // addition
+            const floating v0 = v[0] + vec.v[0];
+            const floating v1 = v[1] + vec.v[1];
+            const floating v2 = v[2] + vec.v[2];
+
+            // Set result at the end to allow in-place addition
+            result.v[0] = v0;
+            result.v[1] = v1;
+            result.v[2] = v2;
+
+            return result;
+        }
+
+        /// @brief add vector with another vector
+        /// @param vec Other vector
+        /// @param result Resulting Vector3
+        Vector3 &add(Vector3 &vec)
+        {
+            return add(vec, *this);
+        }        
 
         /// @brief Multiply this vector by a 4x3 matrix (affine transform)
         /// @param m Matrix4x3 to multiply by
@@ -96,6 +146,32 @@ namespace isaac::math
             return result;
         }
 
+        /// @brief Translate this vector by a 4x3 matrix (affine transform)
+        /// @param m Matrix4x3 to multiply by
+        /// @param result Resulting Vector3
+        Vector3 &trans(Matrix4x3 &m, Vector3 &result)
+        {
+            const floating(&r)[4][3] = m.v;
+
+            const floating v0 =
+                r[3][0];
+
+            const floating v1 =
+                r[3][1];
+
+            const floating v2 =
+                r[3][2];
+
+            // Set result at the end to allow in-place multiplication
+            result.v[0] = v0;
+            result.v[1] = v1;
+            result.v[2] = v2;
+
+            return result;
+        }
+
+
+
         /// @brief dot vector with another vector
         /// @param vec Other vector
         /// @param result Resulting scalar
@@ -111,6 +187,103 @@ namespace isaac::math
             
             return result;
         }        
-    };
+
+        
+        /// @brief make vector into unit vector
+        /// @param result Resulting Vector3
+        Vector3 &normalise(Vector3 &result)
+        {   //asigned to existing memory locations for faster performance
+
+            const floating length = sqrt((v[0]*v[0]) + (v[1]*v[1]) + (v[2]*v[2]));
+            const floating length_reciprocal = 1.0/length;
+            
+            // multiplication
+            const floating v0 = v[0] * length_reciprocal;
+            const floating v1 = v[1] * length_reciprocal;
+            const floating v2 = v[2] * length_reciprocal;
+
+            // Set result at the end to allow in-place multiplication
+            result.v[0] = v0;
+            result.v[1] = v1;
+            result.v[2] = v2;
+
+            return result;
+        }
+
+        Vector3 &normalise() {
+            return normalise(*this);
+        }
+
+        inline Vector3& operator=(const Vector3& other){
+            v[0] = other.v[0];
+            v[1] = other.v[1];
+            v[2] = other.v[2];            
+            return *this;
+        }
+
+        /// @brief square vector
+        /// @param result Resulting Vector3
+        Vector3 &squared(Vector3 &result)
+        {   //asigned to existing memory locations for faster performance
+            return mul(*this, result);
+        }
+
+        /// @brief square vector
+        Vector3 &squared()
+        {   //asigned to existing memory locations for faster performance
+            return squared(*this);
+        }
+
+        // TODO Comment me
+        // Just do the vetor rotation (not translation)
+        // Useful for transforming direction vectors
+        Vector3 rot( Matrix4x3& m, Vector3& result )
+        {
+            const floating(&r)[4][3] = m.v;
+
+            floating v0 =
+            r[ 0 ][ 0 ] * v[ 0 ] +
+            r[ 1 ][ 0 ] * v[ 1 ] +
+            r[ 2 ][ 0 ] * v[ 2 ];
+
+            floating v1 =
+            r[ 0 ][ 1 ] * v[ 0 ] +
+            r[ 1 ][ 1 ] * v[ 1 ] +
+            r[ 2 ][ 1 ] * v[ 2 ];
+
+            floating v2 =
+            r[ 0 ][ 2 ] * v[ 0 ] +
+            r[ 1 ][ 2 ] * v[ 1 ] +
+            r[ 2 ][ 2 ] * v[ 2 ];
+
+            result.v[ 0 ] = v0;
+            result.v[ 1 ] = v1;
+            result.v[ 2 ] = v2;
+
+            return result;
+        }
+
+
+    // ---------------------------------------------------------------------------------------------------------
+    }; //end of Vector3
+
+    // Why should I use <iostream> instead of the traditional <cstdio>?
+    //
+    // Increase type safety, reduce errors, allow extensibility, and provide inheritability. printf() is arguably not broken, and scanf() is perhaps livable despite being error prone, however both are limited with respect to what C++ I/O can do. C++ I/O (using << and >>) is, relative to C (using printf() and scanf()).
+    //
+    // More type-safe: With <iostream>, the type of object being I/O'd is known statically by the compiler. In contrast, uses "%" fields to figure out the types dynamically.
+    // Less error prone: With <iostream>, there are no redundant "%" tokens that have to be consistent with the actual objects being I/O'd. Removing redundancy removes a class of errors.
+    // Extensible: The C++ <iostream> mechanism allows new user-defined types to be I/O'd without breaking existing code. Imagine the chaos if everyone was simultaneously adding new incompatible "%" fields to printf() and scanf()?!
+    // Inheritable: The C++ <iostream> mechanism is built from real classes such as std::ostream and std::istream. Unlike <cstdio>'s FILE*, these are real classes and hence inheritable. This means you can have other user-defined things that look and act like streams, yet that do whatever strange and wonderful things you want. You automatically get to use the zillions of lines of I/O code written by users you don't even know, and they don't need to know about your "extended stream" class.
+    inline std::ostream& operator<<(std::ostream& os, const Vector3& v) {
+        os 
+            << "(" 
+            << v.v[0] << ","
+            << v.v[1] << ","
+            << v.v[2]
+            << ")";
+        return os;
+    }
+
 
 } // namespace isaac::math
