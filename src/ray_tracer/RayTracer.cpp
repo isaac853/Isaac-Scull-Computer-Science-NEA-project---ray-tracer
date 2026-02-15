@@ -43,4 +43,4 @@ namespace isaac::ray_tracer {
 
 //materials to have a smoothness property that perturbs the reflected rays similarly to if they were chosen from a normal distribution
 //for now have a constant no. of rays scattering at any surface
-//materials!
+//materials! draw a diagram, figure out how to do anything at all

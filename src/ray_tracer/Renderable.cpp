@@ -22,6 +22,9 @@ namespace isaac::ray_tracer{
             m_i.set(t_i);
         }
 
+        void Renderable::render(Vector3& dir, Vector3 &intersection, Vector3& colour){
+            colour.set(0.0, 0.0, 0.0); // pointless implementation as this will not be called
+        }
 
 
 

@@ -263,6 +263,11 @@ namespace isaac::math
             return result;
         }
 
+        inline void set(floating num1, floating num2, floating num3){
+            v[0] = num1;
+            v[1] = num2;
+            v[2] = num3;
+        }
 
     // ---------------------------------------------------------------------------------------------------------
     }; //end of Vector3
