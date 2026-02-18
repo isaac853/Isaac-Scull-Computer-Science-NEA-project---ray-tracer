@@ -31,7 +31,7 @@ namespace isaac::ray_tracer {
                 nearest = renderable;
             }
         }
-        colour = scale.mul(dir.squared(), r);
+       // colour = scale.mul(dir.squared(), r);
     
         if(nearest != NULL){
             // Vector3 intPoint;
