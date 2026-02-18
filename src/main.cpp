@@ -14,6 +14,7 @@
 #include "ray_tracer/RayTracer.hpp"
 #include "ray_tracer/Camera.hpp"
 #include "ray_tracer/objects/RenderableSphere.hpp"
+#include "ray_tracer/PlainMaterial.hpp"
 
 // Canvas parameters
 const int CANVAS_WIDTH = 512;
@@ -97,8 +98,10 @@ int main(int argc, char** argv) {
     // Temp stuff to view
     isaac::math::Transform t1;
     t1.tz = 8.0;
+    isaac::math::Vector3 colour(0.5, 0.0, 0.5);
+    isaac::ray_tracer::PlainMaterial mat(1.0, 0.0, colour);
     isaac::math::Sphere s1(1.0);
-    isaac::ray_tracer::RenderableSphere rs1(t1, s1);
+    isaac::ray_tracer::RenderableSphere rs1(t1,mat, s1);
     rayTracer.add(&rs1);
 
 

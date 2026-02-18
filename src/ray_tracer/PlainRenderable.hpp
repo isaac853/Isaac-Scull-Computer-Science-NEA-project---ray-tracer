@@ -5,7 +5,7 @@
 namespace isaac::ray_tracer {
 using namespace isaac::math;
     class PlainRenderable:public Renderable{
-        private:
+        protected:
         PlainMaterial material;
         public:
         PlainRenderable(Transform &t, PlainMaterial m);

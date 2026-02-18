@@ -28,7 +28,8 @@ class PlainMaterial {
         /// @return 
         inline floating ambientFactor(Vector3 &normal, Vector3 &dir){
             const floating t = normal.dot(dir); // this will be negative because the incoming ray will be in the opposite direction to the normal
-            return 0.5 * (1-t) * 0.5; // TODO this has been timesed by 0.5 to dampen, make this better e.g pass as parameter
+            //return 0.5 * (1-t) *0.5; // TODO this has been timesed by 0.5 to dampen, make this better e.g pass as parameter
+            return -t;
         }
 
         inline void colourCombine(Vector3 &incident, Vector3 &normal, Vector3 &dir, Vector3 &result){

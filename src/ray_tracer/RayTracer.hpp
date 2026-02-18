@@ -5,6 +5,7 @@
 
 namespace isaac::ray_tracer {
 using namespace isaac::math;
+    class Renderable;
     class RayTracer{
     private:
     //pointers are super scary, be careful
@@ -13,6 +14,7 @@ using namespace isaac::math;
     //takes a direction vector and returns a colour (stored in a vector class for convenience)
     //by ref used for both to avoid space reallocation
         void render(Vector3& dir, Vector3& colour);
+        void render(Vector3& start, Vector3& dir, Vector3& colour);
 
         inline void add(Renderable* r){
             renderables.push_back(r);

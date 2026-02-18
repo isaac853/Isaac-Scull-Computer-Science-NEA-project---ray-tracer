@@ -113,6 +113,27 @@ namespace isaac::math
             return add(vec, *this);
         }        
 
+        Vector3 &sub(Vector3 &vec, Vector3 &result)
+        {
+            // subtraction
+            const floating v0 = v[0] - vec.v[0];
+            const floating v1 = v[1] - vec.v[1];
+            const floating v2 = v[2] - vec.v[2];
+
+            // Set result at the end to allow in-place subtraction
+            result.v[0] = v0;
+            result.v[1] = v1;
+            result.v[2] = v2;
+
+            return result;
+        }
+
+        Vector3 &sub(Vector3 &vec)
+        {
+            return sub(vec, *this);
+        }  
+        
+        
         /// @brief Multiply this vector by a 4x3 matrix (affine transform)
         /// @param m Matrix4x3 to multiply by
         /// @param result Resulting Vector3

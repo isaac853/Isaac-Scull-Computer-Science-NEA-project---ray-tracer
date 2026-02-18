@@ -11,7 +11,7 @@ namespace isaac::ray_tracer{
            //translate start and direction into the coordinate space of our object
             Vector3 os;
             Vector3 od;
-            start.trans(m_i, os); // poinless rotation here
+            start.trans(m_i, os);
             dir.rot(m_i, od);
             return intersectsObject(os, od);
         }
@@ -21,8 +21,7 @@ namespace isaac::ray_tracer{
             m_f.set(t_f);
             m_i.set(t_i);
         }
-
-        void Renderable::render(Vector3& dir, Vector3 &intersection, Vector3& colour){
+        void Renderable::render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour ){
             colour.set(0.0, 0.0, 0.0); // pointless implementation as this will not be called
         }
 

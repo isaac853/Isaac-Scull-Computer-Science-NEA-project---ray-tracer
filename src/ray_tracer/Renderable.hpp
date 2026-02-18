@@ -2,12 +2,13 @@
 #include "math/Vector3.hpp"
 #include "math/Transform.hpp"
 #include "math/Matrix4x3.hpp"
+#include "ray_tracer/RayTracer.hpp"
 
 namespace isaac::ray_tracer{
     using namespace isaac::math;
-
+    class RayTracer;
     class Renderable{
-        private:
+        protected:
             // TODO we almost certainly don't want to keep all of these on the class
             // TODO but lets remove them when we are sure we don't need them any more
             Transform t_f; // Forward quaternion transform
@@ -34,6 +35,14 @@ namespace isaac::ray_tracer{
 
             floating intersects(Vector3 &start, Vector3 &dir);
     
-            virtual void render(Vector3& dir, Vector3 &intersection, Vector3& colour);
+             // Pass ray tracer, start, dir, mink to renderable and get back a colour
+        
+           /// @brief delegate render operation to each renderable
+           /// @param ray_tracer
+           /// @param start in world coordinates
+           /// @param dir also in world coordinates
+           /// @param dist how far along dir from start the intersection point is
+           /// @param colour the return value
+           virtual void render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour );
     };
 }
