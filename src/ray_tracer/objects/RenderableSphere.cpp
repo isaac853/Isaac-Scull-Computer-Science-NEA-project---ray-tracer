@@ -9,7 +9,7 @@ floating RenderableSphere::intersectsObject(Vector3& start, Vector3& dir) {
     return sphere.intersects(start, dir);
 }
 
-void RenderableSphere::render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour ){
+void RenderableSphere::render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour, int remainingDepth ){
     //intersection is dist * dir + start
     Vector3 intersection;
     dir.mul(dist, intersection);
@@ -23,7 +23,13 @@ void RenderableSphere::render(RayTracer& ray_tracer, Vector3& start, Vector3& di
     intersection.sub(center, normal);
     normal.normalise(); // TODO we can achieve this by multiplying by reciprocal of radius
 
-    Vector3 black;
-    material.colourCombine(black, normal, dir, colour);
+    Vector3 reflectedColour;
+    Vector3 reflectedDir;
+
+    simpleReflect(dir, normal, reflectedDir);
+    ray_tracer.render(intersection, reflectedDir, reflectedColour, remainingDepth);
+
+    material.colourCombine(reflectedColour, normal, dir, colour);
+
     }
 }  // namespace isaac::ray_tracer

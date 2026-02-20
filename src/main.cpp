@@ -97,12 +97,35 @@ int main(int argc, char** argv) {
 
     // Temp stuff to view
     isaac::math::Transform t1;
+    isaac::math::Transform t2;
+    isaac::math::Transform t3;
+    
     t1.tz = 8.0;
-    isaac::math::Vector3 colour(0.5, 0.0, 0.5);
-    isaac::ray_tracer::PlainMaterial mat(1.0, 0.0, colour);
+    t2.tz = 4.0;
+    t2.tx = -2.1;
+    t3.tz = 9.0;
+    t3.tx = 4.0;
+    t3.ty = 4.0;
+
+    isaac::math::Vector3 c1(0.5, 0.1, 0.5);
+    isaac::math::Vector3 c2(0.5, 0.5, 0.1);
+    isaac::math::Vector3 c3(0.1, 0.5, 0.5);
+
+    isaac::ray_tracer::PlainMaterial mat1(1.0, 1.0, c1);
+    isaac::ray_tracer::PlainMaterial mat2(1.0, 1.0, c2);
+    isaac::ray_tracer::PlainMaterial mat3(1.0, 1.0, c3);
+
     isaac::math::Sphere s1(1.0);
-    isaac::ray_tracer::RenderableSphere rs1(t1,mat, s1);
+    isaac::math::Sphere s2(2.0);
+    isaac::math::Sphere s3(3.0);
+
+    isaac::ray_tracer::RenderableSphere rs1(t1,mat1, s1);
+    isaac::ray_tracer::RenderableSphere rs2(t2,mat2, s2);
+    isaac::ray_tracer::RenderableSphere rs3(t3,mat3, s3);
+    
     rayTracer.add(&rs1);
+    rayTracer.add(&rs2);
+    rayTracer.add(&rs3);
 
 
     // Main loop

@@ -9,18 +9,17 @@ namespace isaac::ray_tracer {
     /// @param colour the return value colour
     void RayTracer::render(Vector3& dir, Vector3& colour){
         Vector3 start; 
-        render(start, dir, colour);
+        render(start, dir, colour, 10); // TODO 10 is remaining depth, make into parameter
     }
     
     /// @brief recursively traces rays rays against all renderables 
     /// @param start 
     /// @param dir 
     /// @param colour 
-    void RayTracer::render(Vector3& start, Vector3& dir, Vector3& colour){
-        Vector3 scale(6.0, 6.0, 1.0);
-        Vector3 red(1.0, 0.0, 0.0);
-        Vector3 r;
-        // std::cout << dir << "\n";
+    void RayTracer::render(Vector3& start, Vector3& dir, Vector3& colour, int remainingDepth){
+
+        if(remainingDepth <= 0) return; //base case
+
         //loops through renderable list
         Renderable* nearest = NULL;
         floating mink = -1.0;
@@ -31,25 +30,12 @@ namespace isaac::ray_tracer {
                 nearest = renderable;
             }
         }
-       // colour = scale.mul(dir.squared(), r);
     
         if(nearest != NULL){
-            // Vector3 intPoint;
-            // dir.mul(mink, intPoint);
-            // intPoint.add(start); // This is where our ray has intersected with our renderable object
-
-            // Now we need enough information to extract data from our material...
-
             // Only our renderable knows its shape and thus how to get an (x,y) texture coordinate
-
-            // We need to decide if a second call to renderable is going to be used !?!
-
-            nearest->render(*this, start, dir, mink, colour);
-        
             // Pass ray tracer, start, dir, mink to renderable and get back a colour
             // Needs to be virtual so PlainRenderable and MappedRenderable can work differently
-            
-
+            nearest->render(*this, start, dir, mink, colour, remainingDepth - 1);
         }
     }
 }

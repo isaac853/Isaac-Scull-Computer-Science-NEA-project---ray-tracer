@@ -9,5 +9,7 @@ using namespace isaac::math;
         PlainMaterial material;
         public:
         PlainRenderable(Transform &t, PlainMaterial m);
+
+        void simpleReflect(Vector3& dir, Vector3& normal, Vector3& result);
     };
 }

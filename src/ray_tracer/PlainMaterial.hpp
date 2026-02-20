@@ -36,6 +36,7 @@ class PlainMaterial {
             // incident light times colour + colour times ambient factor
             Vector3 part1;
             incident.mul(colour, part1);
+            part1.mul(reflectivity, part1);
 
             Vector3 part2;
             colour.mul(factor, part2);

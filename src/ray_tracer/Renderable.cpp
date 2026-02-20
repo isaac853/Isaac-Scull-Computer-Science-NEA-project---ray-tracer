@@ -21,7 +21,7 @@ namespace isaac::ray_tracer{
             m_f.set(t_f);
             m_i.set(t_i);
         }
-        void Renderable::render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour ){
+        void Renderable::render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour , int remainingDepth){
             colour.set(0.0, 0.0, 0.0); // pointless implementation as this will not be called
         }
 

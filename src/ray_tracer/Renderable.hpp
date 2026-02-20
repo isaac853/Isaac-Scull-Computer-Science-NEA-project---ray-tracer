@@ -43,6 +43,6 @@ namespace isaac::ray_tracer{
            /// @param dir also in world coordinates
            /// @param dist how far along dir from start the intersection point is
            /// @param colour the return value
-           virtual void render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour );
+           virtual void render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour, int remainingDepth );
     };
 }
