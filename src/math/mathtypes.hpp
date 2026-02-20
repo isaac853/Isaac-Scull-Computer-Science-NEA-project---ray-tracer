@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stdint.h>
 namespace isaac::math {
     // TODO Perhaps this should be switchable by the build system later
     typedef double floating;

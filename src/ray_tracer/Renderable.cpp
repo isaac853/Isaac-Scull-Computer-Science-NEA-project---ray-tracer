@@ -25,11 +25,13 @@ namespace isaac::ray_tracer{
             colour.set(0.0, 0.0, 0.0); // pointless implementation as this will not be called
         }
 
-
-
-
-
-
+        //TODO this might belong somewhere else
+        void Renderable::simpleReflect(Vector3& dir, Vector3& normal, Vector3& result){
+        //dot normal with dir and times by 2 then add to dir
+            floating dirDotNormal = dir.dot(normal);
+            normal.mul((dirDotNormal*-2.0), result);
+            result.add(dir);
+        }
 
 }
 

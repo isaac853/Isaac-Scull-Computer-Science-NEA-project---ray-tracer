@@ -9,7 +9,7 @@ namespace isaac::ray_tracer {
     /// @param colour the return value colour
     void RayTracer::render(Vector3& dir, Vector3& colour){
         Vector3 start; 
-        render(start, dir, colour, 10); // TODO 10 is remaining depth, make into parameter
+        render(start, dir, colour, 3); // TODO 10 is remaining depth, make into parameter
     }
     
     /// @brief recursively traces rays rays against all renderables 

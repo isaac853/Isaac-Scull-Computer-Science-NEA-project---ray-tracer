@@ -64,7 +64,7 @@ void Camera::render(
         [&](const int x, const int y, const int w, const int h, uint8_t &r, uint8_t &g, uint8_t &b) {
 
             const floating cx = -(offset_x + (floating)x);
-            const floating cy = (offset_y + (floating)y);
+            const floating cy = -(offset_y + (floating)y);
             const floating cz = -focalLength; 
 
             //std::cout << "x=" << x << " cx=" << cx << "\n";

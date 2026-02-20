@@ -15,6 +15,7 @@
 #include "ray_tracer/Camera.hpp"
 #include "ray_tracer/objects/RenderableSphere.hpp"
 #include "ray_tracer/PlainMaterial.hpp"
+#include "ray_tracer/objects/RenderableCheckedPlane.hpp"
 
 // Canvas parameters
 const int CANVAS_WIDTH = 512;
@@ -86,7 +87,7 @@ int main(int argc, char** argv) {
 
     //make a camera with focal length to size ratio similar to human eye
     isaac::ray_tracer::Camera camera(0.96, 1.0, 1.0);
-    const int32_t samplesPerPixel = 4; // TODO make this a variable and put it on a slider
+    const int32_t samplesPerPixel = 16; // TODO make this a variable and put it on a slider
     
     // Draw some demo patterns
     canvas.DrawCircle(128, 128, 50, 255, 0, 0);     // Red circle
@@ -99,21 +100,29 @@ int main(int argc, char** argv) {
     isaac::math::Transform t1;
     isaac::math::Transform t2;
     isaac::math::Transform t3;
-    
+    isaac::math::Transform t4;
+
     t1.tz = 8.0;
+    t1.ty = 0.5;
     t2.tz = 4.0;
     t2.tx = -2.1;
+    t2.ty = -1.0;
     t3.tz = 9.0;
     t3.tx = 4.0;
     t3.ty = 4.0;
+    t4.ty = -10.0;
 
     isaac::math::Vector3 c1(0.5, 0.1, 0.5);
     isaac::math::Vector3 c2(0.5, 0.5, 0.1);
     isaac::math::Vector3 c3(0.1, 0.5, 0.5);
+    isaac::math::Vector3 c4(0.0, 0.0, 0.0);    
+    isaac::math::Vector3 c5(1.0, 1.0, 1.0);
 
     isaac::ray_tracer::PlainMaterial mat1(1.0, 1.0, c1);
     isaac::ray_tracer::PlainMaterial mat2(1.0, 1.0, c2);
     isaac::ray_tracer::PlainMaterial mat3(1.0, 1.0, c3);
+    isaac::ray_tracer::PlainMaterial mat4(1.0, 1.0, c4);
+    isaac::ray_tracer::PlainMaterial mat5(1.0, 1.0, c5);    
 
     isaac::math::Sphere s1(1.0);
     isaac::math::Sphere s2(2.0);
@@ -122,11 +131,12 @@ int main(int argc, char** argv) {
     isaac::ray_tracer::RenderableSphere rs1(t1,mat1, s1);
     isaac::ray_tracer::RenderableSphere rs2(t2,mat2, s2);
     isaac::ray_tracer::RenderableSphere rs3(t3,mat3, s3);
-    
+    isaac::ray_tracer::RenderableCheckedPlane rcp(t4, mat4, mat5);
+
     rayTracer.add(&rs1);
     rayTracer.add(&rs2);
     rayTracer.add(&rs3);
-
+    rayTracer.add(&rcp);
 
     // Main loop
     bool running = true;

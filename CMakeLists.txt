@@ -15,6 +15,7 @@ include(GNUInstallDirs)
 enable_testing()
 
 set(extra_sources
+  src/ray_tracer/objects/RenderableCheckedPlane.cpp
   src/ray_tracer/PlainRenderable.cpp
   src/ray_tracer/PlainMaterial.cpp
   src/ray_tracer/Material.cpp
