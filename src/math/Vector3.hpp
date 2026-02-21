@@ -184,9 +184,9 @@ namespace isaac::math
                 r[3][2];
 
             // Set result at the end to allow in-place multiplication
-            result.v[0] = v0;
-            result.v[1] = v1;
-            result.v[2] = v2;
+            result.v[0] = v0 + v[0];
+            result.v[1] = v1 + v[1];
+            result.v[2] = v2 + v[2];
 
             return result;
         }

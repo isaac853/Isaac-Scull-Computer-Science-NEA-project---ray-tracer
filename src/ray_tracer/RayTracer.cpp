@@ -9,7 +9,7 @@ namespace isaac::ray_tracer {
     /// @param colour the return value colour
     void RayTracer::render(Vector3& dir, Vector3& colour){
         Vector3 start; 
-        render(start, dir, colour, 3); // TODO 10 is remaining depth, make into parameter
+        render(start, dir, colour, 4); // TODO 10 is remaining depth, make into parameter
     }
     
     /// @brief recursively traces rays rays against all renderables 
@@ -25,7 +25,7 @@ namespace isaac::ray_tracer {
         floating mink = -1.0;
         for(Renderable* renderable:renderables){
             const floating k = renderable->intersects(start, dir);
-            if (k >= 0.0 && (nearest == NULL || k < mink)){
+            if (k > 0.1 && (nearest == NULL || k < mink)){
                 mink = k;
                 nearest = renderable;
             }

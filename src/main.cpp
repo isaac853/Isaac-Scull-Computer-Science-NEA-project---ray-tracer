@@ -16,6 +16,7 @@
 #include "ray_tracer/objects/RenderableSphere.hpp"
 #include "ray_tracer/PlainMaterial.hpp"
 #include "ray_tracer/objects/RenderableCheckedPlane.hpp"
+#include "ray_tracer/objects/RenderableLightPlane.hpp"
 
 // Canvas parameters
 const int CANVAS_WIDTH = 512;
@@ -101,6 +102,7 @@ int main(int argc, char** argv) {
     isaac::math::Transform t2;
     isaac::math::Transform t3;
     isaac::math::Transform t4;
+    isaac::math::Transform t5;
 
     t1.tz = 8.0;
     t1.ty = 0.5;
@@ -111,18 +113,25 @@ int main(int argc, char** argv) {
     t3.tx = 4.0;
     t3.ty = 4.0;
     t4.ty = -10.0;
+    //light
+    t5.tz = 20;
+
+
 
     isaac::math::Vector3 c1(0.5, 0.1, 0.5);
     isaac::math::Vector3 c2(0.5, 0.5, 0.1);
     isaac::math::Vector3 c3(0.1, 0.5, 0.5);
     isaac::math::Vector3 c4(0.0, 0.0, 0.0);    
     isaac::math::Vector3 c5(1.0, 1.0, 1.0);
+    isaac::math::Vector3 c6(0.8, 1.0, 1.0);
 
     isaac::ray_tracer::PlainMaterial mat1(1.0, 1.0, c1);
     isaac::ray_tracer::PlainMaterial mat2(1.0, 1.0, c2);
     isaac::ray_tracer::PlainMaterial mat3(1.0, 1.0, c3);
     isaac::ray_tracer::PlainMaterial mat4(1.0, 1.0, c4);
     isaac::ray_tracer::PlainMaterial mat5(1.0, 1.0, c5);    
+
+
 
     isaac::math::Sphere s1(1.0);
     isaac::math::Sphere s2(2.0);
@@ -132,11 +141,13 @@ int main(int argc, char** argv) {
     isaac::ray_tracer::RenderableSphere rs2(t2,mat2, s2);
     isaac::ray_tracer::RenderableSphere rs3(t3,mat3, s3);
     isaac::ray_tracer::RenderableCheckedPlane rcp(t4, mat4, mat5);
+    isaac::ray_tracer::RenderableLightPlane rlp(t5, 2.0, 0.5, c6);
 
     rayTracer.add(&rs1);
     rayTracer.add(&rs2);
     rayTracer.add(&rs3);
     rayTracer.add(&rcp);
+    rayTracer.add(&rlp);
 
     // Main loop
     bool running = true;
