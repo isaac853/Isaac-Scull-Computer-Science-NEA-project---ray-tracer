@@ -19,7 +19,7 @@
 #include "ray_tracer/objects/RenderableLightPlane.hpp"
 
 // Canvas parameters
-const int CANVAS_WIDTH = 512;
+const int CANVAS_WIDTH = 1024;
 const int CANVAS_HEIGHT = 512;
 
 
@@ -101,19 +101,19 @@ int main(int argc, char** argv) {
     isaac::math::Transform t4;
     isaac::math::Transform t5;
 
-    t1.tz = 8.0;
+    t1.tz = 10.0;
     t1.ty = 0.5;
-    t2.tz = 4.0;
+    t2.tz = 6.0;
     t2.tx = -2.1;
     t2.ty = -1.0;
-    t3.tz = 9.0;
+    t3.tz = 11.0;
     t3.tx = 4.0;
-    t3.ty = 4.0;
+    t3.ty = 0.0;
     t4.ty = -10.0;
     //light
-    t5.tz = 15;
-    t5.ty = 3;
-    t5.tx = -6;
+    t5.tz = 20.0;
+    t5.ty = 3.0;
+    t5.tx = -6.0;
 
 
 
@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
     isaac::math::Vector3 c3(0.1, 0.5, 0.5);
     isaac::math::Vector3 c4(0.0, 0.0, 0.0);    
     isaac::math::Vector3 c5(1.0, 1.0, 1.0);
-    isaac::math::Vector3 c6(0.8, 1.0, 1.0);
+    isaac::math::Vector3 c6(0.1, 1.0, .10); //c6(0.8, 1.0, 1.0);
 
     isaac::ray_tracer::PlainMaterial mat1(1.0, 1.0, c1);
     isaac::ray_tracer::PlainMaterial mat2(1.0, 1.0, c2);
@@ -222,12 +222,12 @@ int main(int argc, char** argv) {
                 ImGui::SetNextWindowSize(ImVec2(650, 650), ImGuiCond_FirstUseEver);
                 ImGui::Begin("Pixel Canvas", nullptr, ImGuiWindowFlags_None);
 
-                ImGui::Text("Dynamic RGB Pixel Canvas (512x512)");
+                ImGui::Text("Dynamic RGB Pixel Canvas");
                 ImGui::Separator();
 
                 // Update and display the canvas texture
                 canvas.UpdateTexture();
-                ImGui::Image((void*)(intptr_t)canvas.get_texture_id(), ImVec2(512, 512), ImVec2(0, 1), ImVec2(1, 0));
+                ImGui::Image((void*)(intptr_t)canvas.get_texture_id(), ImVec2(CANVAS_WIDTH, CANVAS_HEIGHT), ImVec2(0, 1), ImVec2(1, 0));
                 
                 ImGui::Separator();
 

@@ -31,7 +31,7 @@ namespace isaac::ray_tracer {
         floating mink = -1.0;
         for(Renderable* renderable:renderables){
             const floating k = renderable->intersects(start, dir);
-            if (k > 0.1 && (nearest == NULL || k < mink)){
+            if (k > 1e-8 && (nearest == NULL || k < mink)){
                 mink = k;
                 nearest = renderable;
             }

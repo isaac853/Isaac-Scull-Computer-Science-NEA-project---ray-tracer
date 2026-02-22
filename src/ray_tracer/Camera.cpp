@@ -57,8 +57,8 @@ void Camera::render(
     const floating offset_x = 0.5 - (floating)pixelCanvas.get_width()*0.5;
     const floating offset_y = 0.5 - (floating)pixelCanvas.get_height()*0.5;
 
-    const floating scale_x = w / (floating)pixelCanvas.get_width();
     const floating scale_y = h / (floating)pixelCanvas.get_height();
+    const floating scale_x = scale_y; //w / (floating)pixelCanvas.get_width();
     const floating scale_c = 255.0 / (floating)samplesPerPixel;
     pixelCanvas.forEach(
         [&](const int x, const int y, const int w, const int h, uint8_t &r, uint8_t &g, uint8_t &b) {
