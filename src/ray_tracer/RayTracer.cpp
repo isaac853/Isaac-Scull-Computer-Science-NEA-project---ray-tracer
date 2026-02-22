@@ -4,12 +4,14 @@
 
 namespace isaac::ray_tracer {
 
+    RayTracer::RayTracer():maxDepth(8),skyColour(){}
+
     /// @brief Special case where the ray starts from 0
     /// @param dir unit vector direction of the ray
     /// @param colour the return value colour
     void RayTracer::render(Vector3& dir, Vector3& colour){
         Vector3 start; 
-        render(start, dir, colour, 4); // TODO 10 is remaining depth, make into parameter
+        render(start, dir, colour, maxDepth); // TODO 10 is remaining depth, make into parameter
     }
     
     /// @brief recursively traces rays rays against all renderables 
@@ -18,7 +20,11 @@ namespace isaac::ray_tracer {
     /// @param colour 
     void RayTracer::render(Vector3& start, Vector3& dir, Vector3& colour, int remainingDepth){
 
-        if(remainingDepth <= 0) return; //base case
+         //base case
+        if(remainingDepth <= 0){
+          //  colour = skyColour;
+            return;
+        }    
 
         //loops through renderable list
         Renderable* nearest = NULL;
@@ -36,6 +42,9 @@ namespace isaac::ray_tracer {
             // Pass ray tracer, start, dir, mink to renderable and get back a colour
             // Needs to be virtual so PlainRenderable and MappedRenderable can work differently
             nearest->render(*this, start, dir, mink, colour, remainingDepth - 1);
+        }
+        else {
+            colour = skyColour;
         }
     }
 }

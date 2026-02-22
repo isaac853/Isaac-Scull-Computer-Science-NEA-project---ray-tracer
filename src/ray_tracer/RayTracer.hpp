@@ -13,6 +13,9 @@ using namespace isaac::math;
     public:
     //takes a direction vector and returns a colour (stored in a vector class for convenience)
     //by ref used for both to avoid space reallocation
+        int maxDepth;
+        Vector3 skyColour;
+        RayTracer();
         void render(Vector3& dir, Vector3& colour);
         void render(Vector3& start, Vector3& dir, Vector3& colour, int remainingDepth);
 

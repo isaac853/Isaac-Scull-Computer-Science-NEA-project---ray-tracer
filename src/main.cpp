@@ -76,6 +76,8 @@ int main(int argc, char** argv) {
     bool show_demo_window = true;
     bool show_another_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    // sky blue is (135, 206, 235)
+    ImVec4 skyColour = ImVec4(35.0/255.0, 35.0/255.0, 35.0/255.0, 1.00f);
     
     // Dialog state
     static float slider_value = 0.5f;
@@ -88,12 +90,7 @@ int main(int argc, char** argv) {
 
     //make a camera with focal length to size ratio similar to human eye
     isaac::ray_tracer::Camera camera(0.96, 1.0, 1.0);
-    const int32_t samplesPerPixel = 16; // TODO make this a variable and put it on a slider
-    
-    // Draw some demo patterns
-    canvas.DrawCircle(128, 128, 50, 255, 0, 0);     // Red circle
-    canvas.DrawCircle(384, 128, 50, 0, 255, 0);     // Green circle
-    canvas.DrawLine(256, 50, 256, 462, 255, 255, 0); // Yellow vertical line
+    int32_t samplesPerPixel = 16;
 
     isaac::ray_tracer::RayTracer rayTracer;
 
@@ -114,7 +111,9 @@ int main(int argc, char** argv) {
     t3.ty = 4.0;
     t4.ty = -10.0;
     //light
-    t5.tz = 20;
+    t5.tz = 15;
+    t5.ty = 3;
+    t5.tx = -6;
 
 
 
@@ -179,20 +178,19 @@ int main(int argc, char** argv) {
         {
             ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiCond_FirstUseEver);
             ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_FirstUseEver);
-            ImGui::Begin("Example Dialog", &show_another_window, ImGuiWindowFlags_None);
+            ImGui::Begin("Tracer Controls", &show_another_window, ImGuiWindowFlags_None);
 
-            ImGui::Text("This is an example ImGui dialog with various controls.");
+            ImGui::Text("These are the parameters of the ray tracer.");
             ImGui::Separator();
 
-            // Slider control
-            ImGui::SliderFloat("Slider", &slider_value, 0.0f, 1.0f);
+            // samples per pixel slider
+            ImGui::SliderInt("samples/pixel", &samplesPerPixel, 1, 32);
 
-            // Button control
-            if (ImGui::Button("Click Me!", ImVec2(100, 0))) {
-                counter++;
-            }
-            ImGui::SameLine();
-            ImGui::Text("Counter: %d", counter);
+            // bounce slider
+            ImGui::SliderInt("no. of bounces", &rayTracer.maxDepth, 1, 32);
+
+            //sky Color picker
+            ImGui::ColorEdit4("sky colour", (float*)&skyColour);
 
             // Text input
             ImGui::InputText("Text Input", text_input, IM_ARRAYSIZE(text_input));
@@ -297,6 +295,10 @@ int main(int argc, char** argv) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        rayTracer.skyColour.v[0] = (double)skyColour.x;
+        rayTracer.skyColour.v[1] = (double)skyColour.y;
+        rayTracer.skyColour.v[2] = (double)skyColour.z;
 
         SDL_GL_SwapWindow(win);
         SDL_Delay(10);
