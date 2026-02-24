@@ -27,7 +27,8 @@ using namespace isaac::math;
         colour.mul(factor < 1.0 ? brightness : brightness/factor, lightColour);
 
         Vector3 tcol;
-        ray_tracer.render(intersection, dir, tcol, remainingDepth);
+        //don't count intersections with light source as a bounce 
+        ray_tracer.render(intersection, dir, tcol, remainingDepth + 1);
 
         tcol.add(lightColour, kolour);
     } 

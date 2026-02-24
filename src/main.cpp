@@ -1,6 +1,7 @@
 // Tell SDL not to take over our main method
 #define SDL_MAIN_HANDLED
 
+//imports
 #include <iostream>
 #include <vector>
 #include <cstring>
@@ -18,28 +19,32 @@
 #include "ray_tracer/objects/RenderableCheckedPlane.hpp"
 #include "ray_tracer/objects/RenderableLightPlane.hpp"
 
-// Canvas parameters
+// Canvas size parameters in pixels
 const int CANVAS_WIDTH = 1024;
 const int CANVAS_HEIGHT = 512;
 
-
+// entry point of main
 int main(int argc, char** argv) {
+    //stop the compiler complaining about unused arguments
     (void)argc; (void)argv;
-    std::cout << "Hello world and Isaac"  << "\n";
     
-    // Initialize SDL2
+    // Initialize SDL2, window abstraction library
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cerr << "SDL_Init Error: " << SDL_GetError() << "\n";
         return 1;
     }
 
+    // openGL interactis with operating system and graphics card, SDL uses it to draw stuff.
+    // SDL interacts with the OS to make windows, menus ect
     // Create SDL window with OpenGL support
+    // just some more initial parameter setting to make SDL use openGL
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    SDL_Window* win = SDL_CreateWindow("ImGui SDL2 Example",
+    // create the main window
+    SDL_Window* win = SDL_CreateWindow("Ray Tracer - Isaac 2026",
                                        SDL_WINDOWPOS_CENTERED,
                                        SDL_WINDOWPOS_CENTERED,
                                        1280, 720,
@@ -63,27 +68,27 @@ int main(int argc, char** argv) {
     SDL_GL_SetSwapInterval(1); // Enable vsync
 
     // Setup ImGui context
+    // ImGUI gives UI elements to work with on the window
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     ImGui::StyleColorsDark();
 
     // Setup Platform/Renderer backends
+    // Lets imGUI know to use SDL2 and that SDL2 is using openGL
     ImGui_ImplSDL2_InitForOpenGL(win, gl_context);
     ImGui_ImplOpenGL3_Init("#version 150");
 
-    // Demo state
-    bool show_demo_window = true;
-    bool show_another_window = true;
+    // application state
+    bool show_demo_window = true; // TODO delete 
+    bool show_controls_window = true; // don't delete
+
+    //main window background colour
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    // sky blue is (135, 206, 235)
+
+    // sky colour, defaults to grey
     ImVec4 skyColour = ImVec4(35.0/255.0, 35.0/255.0, 35.0/255.0, 1.00f);
     
-    // Dialog state
-    static float slider_value = 0.5f;
-    static int counter = 0;
-    static char text_input[256] = "Type something...";
-
     // Canvas setup
     GlPixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     canvas.Clear(32, 32, 64); // Dark blue background
@@ -178,7 +183,7 @@ int main(int argc, char** argv) {
         {
             ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiCond_FirstUseEver);
             ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_FirstUseEver);
-            ImGui::Begin("Tracer Controls", &show_another_window, ImGuiWindowFlags_None);
+            ImGui::Begin("Tracer Controls", &show_controls_window, ImGuiWindowFlags_None);
 
             ImGui::Text("These are the parameters of the ray tracer.");
             ImGui::Separator();
@@ -192,24 +197,8 @@ int main(int argc, char** argv) {
             //sky Color picker
             ImGui::ColorEdit4("sky colour", (float*)&skyColour);
 
-            // Text input
-            ImGui::InputText("Text Input", text_input, IM_ARRAYSIZE(text_input));
-            ImGui::Text("You entered: %s", text_input);
-
             // Color picker
             ImGui::ColorEdit4("Clear Color", (float*)&clear_color);
-
-            // Checkbox
-            static bool checkbox_value = false;
-            ImGui::Checkbox("Example Checkbox", &checkbox_value);
-
-            // Radio buttons
-            static int radio_value = 0;
-            ImGui::RadioButton("Option 1", &radio_value, 0);
-            ImGui::SameLine();
-            ImGui::RadioButton("Option 2", &radio_value, 1);
-            ImGui::SameLine();
-            ImGui::RadioButton("Option 3", &radio_value, 2);
 
             ImGui::Separator();
             ImGui::Text("FPS: %.1f", io.Framerate);
