@@ -94,12 +94,16 @@ int main(int argc, char** argv) {
     canvas.Clear(32, 32, 64); // Dark blue background
 
     //make a camera with focal length to size ratio similar to human eye
+    // is always at (0,0,0) and looking down the z axis
     isaac::ray_tracer::Camera camera(0.96, 1.0, 1.0);
     int32_t samplesPerPixel = 16;
 
+    //create a raytracer
     isaac::ray_tracer::RayTracer rayTracer;
 
-    // Temp stuff to view
+    // Put some things in the world to look at
+    
+    //transform list    
     isaac::math::Transform t1;
     isaac::math::Transform t2;
     isaac::math::Transform t3;
@@ -120,8 +124,7 @@ int main(int argc, char** argv) {
     t5.ty = 3.0;
     t5.tx = -6.0;
 
-
-
+    //colour list
     isaac::math::Vector3 c1(0.5, 0.1, 0.5);
     isaac::math::Vector3 c2(0.5, 0.5, 0.1);
     isaac::math::Vector3 c3(0.1, 0.5, 0.5);
@@ -129,24 +132,26 @@ int main(int argc, char** argv) {
     isaac::math::Vector3 c5(1.0, 1.0, 1.0);
     isaac::math::Vector3 c6(0.1, 1.0, .10); //c6(0.8, 1.0, 1.0);
 
+    //material list
     isaac::ray_tracer::PlainMaterial mat1(1.0, 1.0, c1);
     isaac::ray_tracer::PlainMaterial mat2(1.0, 1.0, c2);
     isaac::ray_tracer::PlainMaterial mat3(1.0, 1.0, c3);
     isaac::ray_tracer::PlainMaterial mat4(1.0, 1.0, c4);
     isaac::ray_tracer::PlainMaterial mat5(1.0, 1.0, c5);    
 
-
-
+    //sphere list
     isaac::math::Sphere s1(1.0);
     isaac::math::Sphere s2(2.0);
     isaac::math::Sphere s3(3.0);
 
+    //  object list
     isaac::ray_tracer::RenderableSphere rs1(t1,mat1, s1);
     isaac::ray_tracer::RenderableSphere rs2(t2,mat2, s2);
     isaac::ray_tracer::RenderableSphere rs3(t3,mat3, s3);
     isaac::ray_tracer::RenderableCheckedPlane rcp(t4, mat4, mat5);
     isaac::ray_tracer::RenderableLightPlane rlp(t5, 2.0, 0.5, c6);
 
+    //adding the objects defined above to the ray tracers renderable list
     rayTracer.add(&rs1);
     rayTracer.add(&rs2);
     rayTracer.add(&rs3);
@@ -154,14 +159,18 @@ int main(int argc, char** argv) {
     rayTracer.add(&rlp);
 
     // Main loop
+    // library updates window every frame
     bool running = true;
     SDL_Event event;
 
     while (running) {
+        //looking for a windowing event, e.g mouse moves
         while (SDL_PollEvent(&event)) {
             ImGui_ImplSDL2_ProcessEvent(&event);
+
+            //handles closing window
             if (event.type == SDL_QUIT) {
-                running = false;
+                running = false; 
             }
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
                 running = false;
@@ -179,7 +188,7 @@ int main(int argc, char** argv) {
             ImGui::ShowDemoWindow(&show_demo_window);
         }
 
-        // Example dialog with controls
+        // dialog with tracer controls
         {
             ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiCond_FirstUseEver);
             ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_FirstUseEver);
@@ -205,90 +214,59 @@ int main(int argc, char** argv) {
 
             ImGui::End();
         }
-            // Canvas drawing window
-            {
-                ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiCond_FirstUseEver);
-                ImGui::SetNextWindowSize(ImVec2(650, 650), ImGuiCond_FirstUseEver);
-                ImGui::Begin("Pixel Canvas", nullptr, ImGuiWindowFlags_None);
+        // Canvas drawing window
+        {
+            ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiCond_FirstUseEver);
+            ImGui::SetNextWindowSize(ImVec2(650, 650), ImGuiCond_FirstUseEver);
+            ImGui::Begin("Pixel Canvas", nullptr, ImGuiWindowFlags_None);
 
-                ImGui::Text("Dynamic RGB Pixel Canvas");
-                ImGui::Separator();
+            ImGui::Text("Dynamic RGB Pixel Canvas");
+            ImGui::Separator();
 
-                // Update and display the canvas texture
-                canvas.UpdateTexture();
-                ImGui::Image((void*)(intptr_t)canvas.get_texture_id(), ImVec2(CANVAS_WIDTH, CANVAS_HEIGHT), ImVec2(0, 1), ImVec2(1, 0));
-                
-                ImGui::Separator();
-
-                // Render Button 
-                if (ImGui::Button("Render", ImVec2(0, 0))) {
-                    // Render a frame
-                    camera.render(
-                        canvas,
-                        samplesPerPixel,
-                        [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
-                            rayTracer.render(dir, colour);
-                        }
-                    );                    
-                }
-
-                ImGui::Separator();
-                ImGui::Text("Drawing Tools:");
-
-                static float draw_color[3] = {1.0f, 0.0f, 0.0f}; // RGB [0-1]
-                ImGui::ColorEdit3("Draw Color", draw_color);
-
-                static int shape = 0;
-                ImGui::RadioButton("Circle##shape", &shape, 0);
-                ImGui::SameLine();
-                ImGui::RadioButton("Line##shape", &shape, 1);
-
-                if (shape == 0) {
-                    // Circle drawing
-                    static int circle_x = 256, circle_y = 256, circle_radius = 30;
-                    ImGui::DragInt("Circle X##pos", &circle_x, 1, 0, 511);
-                    ImGui::DragInt("Circle Y##pos", &circle_y, 1, 0, 511);
-                    ImGui::DragInt("Radius##circ", &circle_radius, 1, 1, 256);
-                    if (ImGui::Button("Draw Circle")) {
-                        uint8_t r = (uint8_t)(draw_color[0] * 255);
-                        uint8_t g = (uint8_t)(draw_color[1] * 255);
-                        uint8_t b = (uint8_t)(draw_color[2] * 255);
-                        canvas.DrawCircle(circle_x, circle_y, circle_radius, r, g, b);
+            // Update and display the canvas texture
+            canvas.UpdateTexture();
+            ImGui::Image((void*)(intptr_t)canvas.get_texture_id(), ImVec2(CANVAS_WIDTH, CANVAS_HEIGHT), ImVec2(0, 1), ImVec2(1, 0));
+            
+            ImGui::Separator();
+            
+            // Render Button 
+            if (ImGui::Button("Render", ImVec2(0, 0))) {
+                // Render a frame
+                camera.render(
+                    canvas,
+                    samplesPerPixel,
+                    //function given to cameras render method to handle each pixel
+                    //captures ray tracer from current scope by ref
+                    [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
+                        rayTracer.render(dir, colour);
                     }
-                } else {
-                    // Line drawing
-                    static int line_x0 = 100, line_y0 = 100, line_x1 = 400, line_y1 = 400;
-                    ImGui::DragInt("Start X##line", &line_x0, 1, 0, 511);
-                    ImGui::DragInt("Start Y##line", &line_y0, 1, 0, 511);
-                    ImGui::DragInt("End X##line", &line_x1, 1, 0, 511);
-                    ImGui::DragInt("End Y##line", &line_y1, 1, 0, 511);
-                    if (ImGui::Button("Draw Line")) {
-                        uint8_t r = (uint8_t)(draw_color[0] * 255);
-                        uint8_t g = (uint8_t)(draw_color[1] * 255);
-                        uint8_t b = (uint8_t)(draw_color[2] * 255);
-                        canvas.DrawLine(line_x0, line_y0, line_x1, line_y1, r, g, b);
-                    }
-                }
-
-                if (ImGui::Button("Clear Canvas##btn")) {
-                    canvas.Clear(32, 32, 64);
-                }
-
-                ImGui::End();
+                );                    
             }
+            ImGui::SameLine();
+            
+            //clear button
+            if (ImGui::Button("Clear Canvas##btn")) {
+                canvas.Clear(32, 32, 64);
+            }
+
+            ImGui::End();
+        }
         // Rendering
         ImGui::Render();
 
+        // Just the stuff you need to do to render a frame.
         glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+        // Copy gui state to the ray tracer
         rayTracer.skyColour.v[0] = (double)skyColour.x;
         rayTracer.skyColour.v[1] = (double)skyColour.y;
         rayTracer.skyColour.v[2] = (double)skyColour.z;
 
+        // More stuff you have to do to render a frame.
         SDL_GL_SwapWindow(win);
         SDL_Delay(10);
     }
