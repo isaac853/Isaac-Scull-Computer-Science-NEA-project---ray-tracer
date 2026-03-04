@@ -10,6 +10,7 @@ GlPixelCanvas::~GlPixelCanvas() {
     }
 }
 
+// Create an openGL texture that can be used to display the pixel texture
 void GlPixelCanvas::CreateTexture() {
     if (texture_id == 0) {
         glGenTextures(1, &texture_id);
@@ -20,6 +21,7 @@ void GlPixelCanvas::CreateTexture() {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
 }
 
+// Copy the pixel data into the openGL texture
 void GlPixelCanvas::UpdateTexture() {
     if (texture_dirty) {
         glBindTexture(GL_TEXTURE_2D, texture_id);
