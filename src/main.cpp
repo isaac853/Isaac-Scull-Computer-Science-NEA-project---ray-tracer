@@ -29,17 +29,18 @@ int main(int argc, char** argv) {
     (void)argc; (void)argv;
     
     // Initialize SDL2, window abstraction library
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << "\n";
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) { //runs initialiser and checks if initialiser fails...
+        std::cerr << "SDL_Init Error: " << SDL_GetError() << "\n";//output an error 
         return 1;
     }
 
-    // openGL interactis with operating system and graphics card, SDL uses it to draw stuff.
+    // openGL interacts with operating system and graphics card, SDL uses it to draw stuff.
     // SDL interacts with the OS to make windows, menus ect
+
     // Create SDL window with OpenGL support
     // just some more initial parameter setting to make SDL use openGL
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);// using openGL 3.3
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
@@ -56,23 +57,23 @@ int main(int argc, char** argv) {
     }
 
     // Create OpenGL context
-    SDL_GLContext gl_context = SDL_GL_CreateContext(win);
-    if (!gl_context) {
-        std::cerr << "Failed to create OpenGL context: " << SDL_GetError() << "\n";
-        SDL_DestroyWindow(win);
+    SDL_GLContext gl_context = SDL_GL_CreateContext(win); //try to init gl_context
+    if (!gl_context) { // if failiure...
+        std::cerr << "Failed to create OpenGL context: " << SDL_GetError() << "\n";//output error message
+        SDL_DestroyWindow(win); //close
         SDL_Quit();
         return 1;
     }
 
-    SDL_GL_MakeCurrent(win, gl_context);
+    SDL_GL_MakeCurrent(win, gl_context); //make the opengl context this files active one
     SDL_GL_SetSwapInterval(1); // Enable vsync
 
     // Setup ImGui context
     // ImGUI gives UI elements to work with on the window
     IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    ImGui::StyleColorsDark();
+    ImGui::CreateContext(); //opens context
+    ImGuiIO& io = ImGui::GetIO(); //input output handling
+    ImGui::StyleColorsDark(); //sets style to dark
 
     // Setup Platform/Renderer backends
     // Lets imGUI know to use SDL2 and that SDL2 is using openGL
