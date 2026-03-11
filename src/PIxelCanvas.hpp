@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
-#include <cstdint>
-#include <functional>
+#include <vector> //used for std::vector type 
+#include <cstdint> // standard integer types
+#include <functional> // provides a hash function
 
 // Simple RGB pixel buffer class
 //  creates an area to draw pixels on

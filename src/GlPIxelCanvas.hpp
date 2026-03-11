@@ -1,4 +1,4 @@
-#pragma once
+#pragma once //nessesarry for all hpp files, tells the compiler to only build them once
 
 #include "PixelCanvas.hpp"
 #include <GL/gl.h>
@@ -25,5 +25,6 @@ public:
     // Copy the pixel data into the openGL texture
     void UpdateTexture();
 
+    //gets the texture id and expects a returned texture_id
     GLuint get_texture_id() { return texture_id; }
 };
