@@ -20,7 +20,7 @@
 #include "ray_tracer/objects/RenderableLightPlane.hpp"
 
 // Canvas size parameters in pixels
-const int CANVAS_WIDTH = 1024;
+const int CANVAS_WIDTH = 512; 
 const int CANVAS_HEIGHT = 512;
 
 // entry point of main
@@ -203,12 +203,22 @@ int main(int argc, char** argv) {
                 // Render a frame
                 //for now just output a message
                 std::cout << "Render button pressed\n";
+
+                canvas.forEach(
+                [&](int x, int y, int w, int h, uint8_t &r, uint8_t &g, uint8_t &b) {
+                    r = x & 255;
+                    b = y & 255;
+                    g = (x + y) & 255; 
+                    
+                    }
+                );
             }
             
             if (ImGui::Button("Clear Canvas", ImVec2(0, 0))) {
                 // Render a frame
                 //for now just output a message
                 std::cout << "Clear button pressed\n";
+                canvas.Clear(32, 32, 64);// sets the canvas to dark blue
             }             
 
             ImGui::End(); // stop talking about it
@@ -237,12 +247,12 @@ int main(int argc, char** argv) {
             ImGui::Text("Dynamic RGB Pixel Canvas"); //block of text at the top
             ImGui::Separator();
             
+            // Update and display the canvas texture
+            canvas.UpdateTexture();
+            ImGui::Image((void*)(intptr_t)canvas.get_texture_id(), ImVec2(CANVAS_WIDTH, CANVAS_HEIGHT), ImVec2(0, 1), ImVec2(1, 0));
+            
             ImGui::End();
         }
-            // // Update and display the canvas texture
-            // canvas.UpdateTexture();
-            // ImGui::Image((void*)(intptr_t)canvas.get_texture_id(), ImVec2(CANVAS_WIDTH, CANVAS_HEIGHT), ImVec2(0, 1), ImVec2(1, 0));
-            
             // ImGui::Separator();
             
             // // Render Button 
