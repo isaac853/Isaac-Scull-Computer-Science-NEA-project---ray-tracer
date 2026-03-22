@@ -11,7 +11,7 @@ namespace isaac::math
     {
     public:
         /// @brief Quaternion (x, y, z, w) and translation (x, y, z) components
-        // Quaternion for ratation should be normalized
+        // Quaternion for rotation should be normalized
         // Rotation represented as (qx, qy, qz, qw)
         // Translation represented as (tx, ty, tz)
         // The values are public for easy access as I see no reason to hide them.

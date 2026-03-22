@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstddef>
-#include <iostream>
+#include <cstddef>  //allows std functions
+#include <iostream> //allows cout
 
 #include "mathtypes.hpp"
 #include "Matrix4x3.hpp"
@@ -11,7 +11,7 @@ namespace isaac::math
     class Vector3
     {
     public:
-        floating v[3];
+        floating v[3]; // attribute definition, put in public for ease of use
 
         /// @brief Default constructor initializes to zero vector
         Vector3()
@@ -47,7 +47,7 @@ namespace isaac::math
             return result;
         }
 
-        /// @brief multiply vector with another vector
+        /// @brief multiply vector with a scalar
         /// @param vec Other vector
         /// @param result Resulting Vector3
         Vector3 &mul(floating scalar, Vector3 &result)
@@ -235,6 +235,7 @@ namespace isaac::math
             return normalise(*this);
         }
 
+        // =
         inline Vector3& operator=(const Vector3& other){
             v[0] = other.v[0];
             v[1] = other.v[1];

@@ -6,7 +6,8 @@
 
 namespace isaac::math
 {
-    /// @brief 4x3 Matrix class for affine transformations
+    /// @brief 4x3 Matrix class for affine transformations (linear)
+    // just for rotation and translation
     class Matrix4x3
     {
     public:
@@ -16,10 +17,10 @@ namespace isaac::math
         Matrix4x3()
         {
             // Initialize to identity matrix
-            v[0][0] = 1.0; v[0][1] = 0.0; v[0][2] = 0.0;
+            v[0][0] = 1.0; v[0][1] = 0.0; v[0][2] = 0.0; // top 3 rows are rotation
             v[1][0] = 0.0; v[1][1] = 1.0; v[1][2] = 0.0;
             v[2][0] = 0.0; v[2][1] = 0.0; v[2][2] = 1.0;
-            v[3][0] = 0.0; v[3][1] = 0.0; v[3][2] = 0.0;
+            v[3][0] = 0.0; v[3][1] = 0.0; v[3][2] = 0.0; //bottom row is translation
         }
 
         /// @brief Assignment operator
