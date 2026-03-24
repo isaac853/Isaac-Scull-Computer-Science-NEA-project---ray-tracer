@@ -50,7 +50,7 @@ namespace isaac::math
             set(t);
         }
         
-        /// @brief Set matrix from a Transform object
+        /// @brief Set matrix from a Transform objectaa
         /// @param t Transform to set from  
         void set(Transform &t)
         {

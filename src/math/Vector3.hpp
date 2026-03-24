@@ -212,7 +212,7 @@ namespace isaac::math
         
         /// @brief make vector into unit vector
         /// @param result Resulting Vector3
-        Vector3 &normalise(Vector3 &result)
+        Vector3 &normalise(Vector3 &result, bool &error)
         {   //asigned to existing memory locations for faster performance
 
             const floating length = sqrt((v[0]*v[0]) + (v[1]*v[1]) + (v[2]*v[2]));
@@ -228,8 +228,19 @@ namespace isaac::math
             result.v[1] = v1;
             result.v[2] = v2;
 
+            error = length == 0.0;
+
+
             return result;
         }
+
+        /// @brief make vector into unit vector
+        /// @param result Resulting Vector3
+        Vector3 &normalise(Vector3 &result){
+            bool error;
+            return normalise(result, error);
+        }
+
 
         Vector3 &normalise() {
             return normalise(*this);

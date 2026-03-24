@@ -1,7 +1,8 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include "math/Vector3.hpp"
-
+#include <iostream>
+#include <stdio.h>
 
 using namespace isaac::math;
 // name and group of test
@@ -133,4 +134,141 @@ TEST_CASE("Test 3d vector =", "[vector3]") {
     REQUIRE_THAT(v1.v[1], Catch::Matchers::WithinAbs(5.0, 1e-6));
     REQUIRE_THAT(v1.v[2], Catch::Matchers::WithinAbs(6.0, 1e-6));
 }
+ 
 
+// //erroneous tests, should cause error so comment when not using
+
+
+
+// TEST_CASE("Test 3d vector constructor fail", "[vector3]") {
+//     //erroneous constructor
+//     isaac::math::Vector3 v1("a","b","c"); 
+
+//     //should always return true, but error should occur before this runs
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+//}
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0,4.0); 
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0); 
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0), v2(1.0, 2.0, 3.0);
+//     floating result;
+//     v1.add(v2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0), result;
+//     floating v2
+//     v1.add(v2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0), v2(1.0, 2.0, 3.0);
+//     floating result;
+//     v1.sub(v2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0), result;
+//     floating v2
+//     v1.sub(v2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0), v2(1.0, 2.0, 3.0);
+//     floating result;
+//     v1.mul(v2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0);
+//     isaac::math::floating scal(3.0);
+//     v1.mul(scal);
+
+// //     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// // }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0), v2(1.0, 2.0, 3.0), result;
+
+//     v1.dot(v2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0);
+//     floating v2;
+//     v1.dot(v2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0), v2(1.0, 2.0, 3.0);
+//     floating result;
+//     v1.crossv2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0), result;
+//     floating v2;
+//     v1.cross(v2, result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
+
+
+
+TEST_CASE("erroneous test", "[vector3]") {
+    isaac::math::Vector3 v1;
+    
+    bool error;
+    v1.normalise(v1, error);
+
+    REQUIRE(true == error); 
+
+
+}
+
+TEST_CASE("new normalise test", "[vector3]") {
+    isaac::math::Vector3 v1(0.0, 0.0, 5.0);
+    
+    bool error;
+    v1.normalise(v1, error);
+
+    REQUIRE(false == error); 
+
+
+}
+
+// TEST_CASE("erroneous test", "[vector3]") {
+//     isaac::math::Vector3 v1(1.0, 2.0, 3.0);
+//     floating v2(1.0);
+
+//     v1 = v2
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
+// }
