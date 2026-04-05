@@ -205,16 +205,74 @@ TEST_CASE("Test vector rotate", "[Vector3]") {
 
 
 
+//erroneous tests
+//------------------------------------------------------------------
 
+// TEST_CASE("Test erroneous transform constructor w char params", "[Transform]") {
+//     Transform t1(a, b, c, d, e, f, g);
 
+//     REQUIRE_THAT(t1.qx, Catch::Matchers::WithinAbs(1.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qy, Catch::Matchers::WithinAbs(2.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qz, Catch::Matchers::WithinAbs(3.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qw, Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tx, Catch::Matchers::WithinAbs(5.0, 1e-6)); 
+//     REQUIRE_THAT(t1.ty, Catch::Matchers::WithinAbs(6.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(7.0, 1e-6)); 
+// }
 
+// TEST_CASE("Test erroneous transform constructor w too many params", "[Transform]") {
+//     Transform t1(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0);
 
+//     REQUIRE_THAT(t1.qx, Catch::Matchers::WithinAbs(1.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qy, Catch::Matchers::WithinAbs(2.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qz, Catch::Matchers::WithinAbs(3.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qw, Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tx, Catch::Matchers::WithinAbs(5.0, 1e-6)); 
+//     REQUIRE_THAT(t1.ty, Catch::Matchers::WithinAbs(6.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(7.0, 1e-6)); 
+// }
 
+// TEST_CASE("Test erroneous transform constructor w too few params", "[Transform]") {
+//     Transform t1(1.0);
 
+//     REQUIRE_THAT(t1.qx, Catch::Matchers::WithinAbs(1.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qy, Catch::Matchers::WithinAbs(2.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qz, Catch::Matchers::WithinAbs(3.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qw, Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tx, Catch::Matchers::WithinAbs(5.0, 1e-6)); 
+//     REQUIRE_THAT(t1.ty, Catch::Matchers::WithinAbs(6.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(7.0, 1e-6)); 
+// }
 
+// TEST_CASE("Test erroneous transform =", "[Transform]") {
+//     Transform t1(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0);
+//     floating t2 = 1.0;
 
+//     t1 = t2;
 
+//     REQUIRE_THAT(t1.qx, Catch::Matchers::WithinAbs(2.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qy, Catch::Matchers::WithinAbs(3.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qz, Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qw, Catch::Matchers::WithinAbs(5.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tx, Catch::Matchers::WithinAbs(6.0, 1e-6)); 
+//     REQUIRE_THAT(t1.ty, Catch::Matchers::WithinAbs(7.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(8.0, 1e-6)); 
+// }
 
+TEST_CASE("Test erroneous inverse transform", "[Transform]") {
+    
+    Transform t1(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+    t1.inverse();
+
+    REQUIRE_THAT(t1.qx, Catch::Matchers::WithinAbs(-1.0, 1e-6)); 
+    REQUIRE_THAT(t1.qy, Catch::Matchers::WithinAbs(-2.0, 1e-6)); 
+    REQUIRE_THAT(t1.qz, Catch::Matchers::WithinAbs(-3.0, 1e-6)); 
+    REQUIRE_THAT(t1.qw, Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+    REQUIRE_THAT(t1.tx, Catch::Matchers::WithinAbs(-118.0, 1e-6)); 
+    REQUIRE_THAT(t1.ty, Catch::Matchers::WithinAbs(-100.0, 1e-6)); 
+    REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(-274.0, 1e-6)); 
+}
 
 
 
