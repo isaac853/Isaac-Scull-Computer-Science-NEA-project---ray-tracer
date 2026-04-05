@@ -251,60 +251,60 @@ int main(int argc, char** argv) {
             canvas.UpdateTexture();
             ImGui::Image((void*)(intptr_t)canvas.get_texture_id(), ImVec2(CANVAS_WIDTH, CANVAS_HEIGHT), ImVec2(0, 1), ImVec2(1, 0));
             
-            ImGui::End();
-        }
-            // ImGui::Separator();
+            ImGui::Separator();
             
-            // // Render Button 
-            // if (ImGui::Button("Render", ImVec2(0, 0))) {
-            //     // Render a frame
-            //     camera.render(
-            //         canvas,
-            //         samplesPerPixel,
-            //         //function given to cameras render method to handle each pixel
-            //         //captures ray tracer from current scope by ref
-            //         [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
-            //             rayTracer.render(dir, colour);
-            //         }
-            //     );                    
-            // }
-            // ImGui::SameLine();
-            
-            // //clear button
-            // if (ImGui::Button("Clear Canvas##btn")) {
-            //     canvas.Clear(32, 32, 64);
-            // }
-
-        
-//      Rendering
-        ImGui::Render();
-
-        // Just the stuff you need to do to render a frame.
-        glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y); //applies the window size
-        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w); // applies background colour
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        // Copy gui state to the ray tracer
-        rayTracer.skyColour.v[0] = (double)skyColour.x;
-        rayTracer.skyColour.v[1] = (double)skyColour.y;
-        rayTracer.skyColour.v[2] = (double)skyColour.z;
-
-        // More stuff you have to do to render a frame.
-        SDL_GL_SwapWindow(win);
-        SDL_Delay(10);
-    }
-
-    // Cleanup shutsdown and removes links between files
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplSDL2_Shutdown();
-    ImGui::DestroyContext();
-
-    SDL_GL_DeleteContext(gl_context);
-    SDL_DestroyWindow(win);
-    SDL_Quit(); 
-
-    std::cout << "Exited cleanly\n";
+            // Render Button 
+            if (ImGui::Button("Render", ImVec2(0, 0))) {
+                    // Render a frame
+                    camera.render(
+                            canvas,
+                            samplesPerPixel,
+                            //function given to cameras render method to handle each pixel
+                            //captures ray tracer from current scope by ref
+                            [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
+                                    rayTracer.render(dir, colour);
+                                }
+                            );                    
+                        }
+                        ImGui::SameLine();
+                        
+                        //clear button
+                        if (ImGui::Button("Clear Canvas##btn")) {
+                                canvas.Clear(32, 32, 64);
+                            }
+                            
+                            ImGui::End();
+                        }
+                            
+                            //      Rendering
+                            ImGui::Render();
+                            
+                            // Just the stuff you need to do to render a frame.
+                            glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y); //applies the window size
+                            glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w); // applies background colour
+                            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+                            
+                            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+                            
+                            // Copy gui state to the ray tracer
+                            rayTracer.skyColour.v[0] = (double)skyColour.x;
+                            rayTracer.skyColour.v[1] = (double)skyColour.y;
+                            rayTracer.skyColour.v[2] = (double)skyColour.z;
+                            
+                            // More stuff you have to do to render a frame.
+                            SDL_GL_SwapWindow(win);
+                            SDL_Delay(10);
+                        }
+                        
+                        // Cleanup shutsdown and removes links between files
+                        ImGui_ImplOpenGL3_Shutdown();
+                        ImGui_ImplSDL2_Shutdown();
+                        ImGui::DestroyContext();
+                        
+                        SDL_GL_DeleteContext(gl_context);
+                        SDL_DestroyWindow(win);
+                        SDL_Quit(); 
+                        
+                        std::cout << "Exited cleanly\n";
     return 0;
 }

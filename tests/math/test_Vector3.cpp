@@ -243,6 +243,7 @@ TEST_CASE("Test 3d vector =", "[vector3]") {
 
 
 TEST_CASE("erroneous test", "[vector3]") {
+
     isaac::math::Vector3 v1;
     
     bool error;

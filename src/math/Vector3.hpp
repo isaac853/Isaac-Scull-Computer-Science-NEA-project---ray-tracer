@@ -139,7 +139,7 @@ namespace isaac::math
         /// @param result Resulting Vector3
         Vector3 &mul(Matrix4x3 &m, Vector3 &result)
         {
-            const floating(&r)[4][3] = m.v;
+            const floating(&r)[4][3] = m.v; //r copies v's values
 
             const floating v0 =
                 r[0][0] * v[0] +
@@ -267,8 +267,7 @@ namespace isaac::math
             return squared(*this);
         }
 
-        // TODO Comment me
-        // Just do the vetor rotation (not translation)
+        // Just do the vector rotation (not translation)
         // Useful for transforming direction vectors
         Vector3 rot( Matrix4x3& m, Vector3& result )
         {
