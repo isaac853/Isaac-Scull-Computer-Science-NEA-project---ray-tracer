@@ -259,32 +259,100 @@ TEST_CASE("Test vector rotate", "[Vector3]") {
 //     REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(8.0, 1e-6)); 
 // }
 
-TEST_CASE("Test erroneous inverse transform", "[Transform]") {
+// TEST_CASE("Test erroneous inverse transform", "[Transform]") {
     
-    Transform t1(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+//     Transform t1(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    t1.inverse();
+//     t1.inverse();
 
-    REQUIRE_THAT(t1.qx, Catch::Matchers::WithinAbs(-1.0, 1e-6)); 
-    REQUIRE_THAT(t1.qy, Catch::Matchers::WithinAbs(-2.0, 1e-6)); 
-    REQUIRE_THAT(t1.qz, Catch::Matchers::WithinAbs(-3.0, 1e-6)); 
-    REQUIRE_THAT(t1.qw, Catch::Matchers::WithinAbs(4.0, 1e-6)); 
-    REQUIRE_THAT(t1.tx, Catch::Matchers::WithinAbs(-118.0, 1e-6)); 
-    REQUIRE_THAT(t1.ty, Catch::Matchers::WithinAbs(-100.0, 1e-6)); 
-    REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(-274.0, 1e-6)); 
+//     printf("\n %lf \n", t1.qx);
+//     printf("%lf \n", t1.qy);
+//     printf("%lf \n", t1.qz);
+//     printf("%lf \n", t1.qw);
+//     printf("%lf \n", t1.tx);
+//     printf("%lf \n", t1.ty);
+//     printf("%lf \n", t1.tz);
+
+
+//     REQUIRE_THAT(t1.qx, Catch::Matchers::WithinAbs(-1.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qy, Catch::Matchers::WithinAbs(-2.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qz, Catch::Matchers::WithinAbs(-3.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qw, Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tx, Catch::Matchers::WithinAbs(-118.0, 1e-6)); 
+//     REQUIRE_THAT(t1.ty, Catch::Matchers::WithinAbs(-100.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(-274.0, 1e-6)); 
+// }
+
+// TEST_CASE("Test erroneous transform constructor w params", "[Transform]") {
+//     Transform t1(1.0);
+
+//     REQUIRE_THAT(t1.qx, Catch::Matchers::WithinAbs(1.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qy, Catch::Matchers::WithinAbs(2.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qz, Catch::Matchers::WithinAbs(3.0, 1e-6)); 
+//     REQUIRE_THAT(t1.qw, Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tx, Catch::Matchers::WithinAbs(5.0, 1e-6)); 
+//     REQUIRE_THAT(t1.ty, Catch::Matchers::WithinAbs(6.0, 1e-6)); 
+//     REQUIRE_THAT(t1.tz, Catch::Matchers::WithinAbs(7.0, 1e-6)); 
+// }
+
+// TEST_CASE("Test erroneous matrix =", "[Matrix4x3]") {
+//     Matrix4x3 m1;
+//     floating m2 = 1.0;
+//     m1 = m2;
+//     REQUIRE_THAT(m1.v[0][0], Catch::Matchers::WithinAbs(2.0, 1e-6)); 
+//     REQUIRE_THAT(m1.v[0][1], Catch::Matchers::WithinAbs(0.0, 1e-6)); 
+//     REQUIRE_THAT(m1.v[0][2], Catch::Matchers::WithinAbs(0.0, 1e-6)); 
+//     REQUIRE_THAT(m1.v[1][0], Catch::Matchers::WithinAbs(0.0, 1e-6)); 
+//     REQUIRE_THAT(m1.v[1][1], Catch::Matchers::WithinAbs(2.0, 1e-6)); 
+//     REQUIRE_THAT(m1.v[1][2], Catch::Matchers::WithinAbs(0.0, 1e-6)); 
+//     REQUIRE_THAT(m1.v[2][0], Catch::Matchers::WithinAbs(0.0, 1e-6)); 
+//     REQUIRE_THAT(m1.v[2][1], Catch::Matchers::WithinAbs(0.0, 1e-6));
+//     REQUIRE_THAT(m1.v[2][2], Catch::Matchers::WithinAbs(2.0, 1e-6)); 
+//     REQUIRE_THAT(m1.v[3][0], Catch::Matchers::WithinAbs(0.0, 1e-6));     
+//     REQUIRE_THAT(m1.v[3][1], Catch::Matchers::WithinAbs(0.0, 1e-6));     
+//     REQUIRE_THAT(m1.v[3][2], Catch::Matchers::WithinAbs(0.0, 1e-6)); 
+// }
+
+// TEST_CASE("Test erroneous vector matrix mul with bad result", "[Vector3]") {
+//     Matrix4x3 m1;
+
+//     Vector3 v1(1.0, 2.0, 3.0);
+//     floating result = 0.0;
+
+//     v1.mul(m1, result);
+
+//     REQUIRE_THAT(result.v[0], Catch::Matchers::WithinAbs(1.0, 1e-6)); 
+//     REQUIRE_THAT(result.v[1], Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(result.v[2], Catch::Matchers::WithinAbs(9.0, 1e-6)); 
+
+// }
+
+// TEST_CASE("Test vector translate", "[Vector3]") {
+  
+
+//     Vector3 v1(1.0, 2.0, 3.0), result, m1;
+
+//     v1.trans(m1, result);
+
+//     REQUIRE_THAT(result.v[0], Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(result.v[1], Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+//     REQUIRE_THAT(result.v[2], Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+
+// }
+
+TEST_CASE("Test erroneous vector translate", "[Vector3]") {
+    Matrix4x3 m1;
+
+    Vector3 v1(1.0, 2.0, 3.0);
+    floating result = 0.0;
+    printf("\n %lf \n", result);
+
+    //v1.trans(m1, result);
+
+    // REQUIRE_THAT(result.v[0], Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+    // REQUIRE_THAT(result.v[1], Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+    // REQUIRE_THAT(result.v[2], Catch::Matchers::WithinAbs(4.0, 1e-6)); 
+    REQUIRE(false);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
