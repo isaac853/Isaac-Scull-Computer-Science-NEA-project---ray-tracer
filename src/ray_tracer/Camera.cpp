@@ -1,5 +1,4 @@
 #include "ray_tracer/Camera.hpp"
-// TODO remove this when I remove the debug messages
 #include <iostream>
 #include "math/Vector3.hpp"
 #include <cstdint>
@@ -10,11 +9,14 @@ using namespace isaac::math;
 
 Camera::Camera(floating focalLength, floating w, floating h) : 
   focalLength(focalLength),
-  w(w),
-  h(h)
+  w(w), //width of camera object
+  h(h) //height of camera object
 {
 }
-
+/// @brief takes floating point value of colour and scales to 0 to 255 scale
+/// @param cc colour component to be scaled
+/// @param cs scale needed to get to 0 to 255 scale
+/// @param c return value
 inline void scaleColourComponent(floating cc, floating cs,  uint8_t &c){
     //scale up
     const floating sc = cc * cs;
@@ -49,44 +51,48 @@ inline floating perturb()
 
 //camera render translates the pixel canvas into pixels with all the vectors we need, and gives to the raytracer render (callback)
 void Camera::render(
+    //parameter list
     PixelCanvas& pixelCanvas,
     const uint8_t samplesPerPixel,
-    std::function<void(Vector3& dir, Vector3& colour, int x, int y)> callback // Speed ?
-){
+    std::function<void(Vector3& dir, Vector3& colour, int x, int y)> callback //function to be passed as a parameter
+){// body of function
 
+    //offset needed to get from center of camera to middle of top left pixel in terms of pixels
     const floating offset_x = 0.5 - (floating)pixelCanvas.get_width()*0.5;
     const floating offset_y = 0.5 - (floating)pixelCanvas.get_height()*0.5;
 
-    const floating scale_y = h / (floating)pixelCanvas.get_height();
-    const floating scale_x = scale_y; //w / (floating)pixelCanvas.get_width();
-    const floating scale_c = 255.0 / (floating)samplesPerPixel;
+    // converts pixels from the pixelcanvas into sizes in world coordinates
+    const floating scale_y = h / (floating)pixelCanvas.get_height(); // multiplies by any value inside camera to make it 1x1
+    const floating scale_x = scale_y; // w / (floating)pixelCanvas.get_width(); // maintains aspect ratio, instead of stretching it
+    const floating scale_c = 255.0 / (floating)samplesPerPixel; // multiplied by sum of oversamples to get mean colours in rgb
+
     pixelCanvas.forEach(
         [&](const int x, const int y, const int w, const int h, uint8_t &r, uint8_t &g, uint8_t &b) {
+            //defining inline the function that foreach will apply to each pixel
 
+            //offset values from center of camera for current pixel in terms of pixels
+            //flipped due to image flipping 
             const floating cx = -(offset_x + (floating)x);
             const floating cy = -(offset_y + (floating)y);
+            
+            //moves the camera back so focal point is at (0,0,0) in world coords
             const floating cz = -focalLength; 
 
-            //std::cout << "x=" << x << " cx=" << cx << "\n";
-
-            // TODO Over-sampling
-            // TODO We probaly want to randomly perturb cx and cy, by a random number between +/-0.5
-            // TODO Then we want to trace a path/ray and get some colour... a few times
-            // TODO Then we want to scale down the colours and return them to the canvas
-            // TODO This needs to be testable
-
-            
+            //using 3d vector to represent colour (scales from 0.0 to 1.0 instead of 0 to 255)
             Vector3 colour;
             
-            
+            // oversampling x times per pixel
             for(uint8_t i = 0; i < samplesPerPixel; i++){
+
+                //randomly perturb vector start point from center of pixel
                 const floating perturb_y = perturb();
                 const floating perturb_x = perturb();
                 
+                //direction vector pointing to focal point from pixel location
                 Vector3 path(
-                    (perturb_x -cx) * scale_x,
+                    (perturb_x -cx) * scale_x, 
                     (perturb_y -cy) * scale_y,
-                    -cz);
+                    -cz); // focal length
                     
                 // Make it a unit vector
                 path.normalise();
