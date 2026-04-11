@@ -304,14 +304,6 @@ namespace isaac::math
     // ---------------------------------------------------------------------------------------------------------
     }; //end of Vector3
 
-    // Why should I use <iostream> instead of the traditional <cstdio>?
-    //
-    // Increase type safety, reduce errors, allow extensibility, and provide inheritability. printf() is arguably not broken, and scanf() is perhaps livable despite being error prone, however both are limited with respect to what C++ I/O can do. C++ I/O (using << and >>) is, relative to C (using printf() and scanf()).
-    //
-    // More type-safe: With <iostream>, the type of object being I/O'd is known statically by the compiler. In contrast, uses "%" fields to figure out the types dynamically.
-    // Less error prone: With <iostream>, there are no redundant "%" tokens that have to be consistent with the actual objects being I/O'd. Removing redundancy removes a class of errors.
-    // Extensible: The C++ <iostream> mechanism allows new user-defined types to be I/O'd without breaking existing code. Imagine the chaos if everyone was simultaneously adding new incompatible "%" fields to printf() and scanf()?!
-    // Inheritable: The C++ <iostream> mechanism is built from real classes such as std::ostream and std::istream. Unlike <cstdio>'s FILE*, these are real classes and hence inheritable. This means you can have other user-defined things that look and act like streams, yet that do whatever strange and wonderful things you want. You automatically get to use the zillions of lines of I/O code written by users you don't even know, and they don't need to know about your "extended stream" class.
     inline std::ostream& operator<<(std::ostream& os, const Vector3& v) {
         os 
             << "(" 
