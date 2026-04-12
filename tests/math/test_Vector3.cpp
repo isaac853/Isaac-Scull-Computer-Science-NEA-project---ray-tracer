@@ -136,6 +136,28 @@ TEST_CASE("Test 3d vector =", "[vector3]") {
 }
  
 
+TEST_CASE("Test squared vector method","[vector3]") {
+    Vector3 v1(1.0, 2.0, 3.0);
+
+    v1.squared();
+
+    REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(1.0, 1e-6));
+    REQUIRE_THAT(v1.v[1], Catch::Matchers::WithinAbs(4.0, 1e-6));
+    REQUIRE_THAT(v1.v[2], Catch::Matchers::WithinAbs(9.0, 1e-6));
+}
+
+TEST_CASE("Test squared vector method w result","[vector3]") {
+    Vector3 v1(1.0, 2.0, 3.0), result;
+
+    v1.squared(result);
+
+    REQUIRE_THAT(result.v[0], Catch::Matchers::WithinAbs(1.0, 1e-6));
+    REQUIRE_THAT(result.v[1], Catch::Matchers::WithinAbs(4.0, 1e-6));
+    REQUIRE_THAT(result.v[2], Catch::Matchers::WithinAbs(9.0, 1e-6));
+}
+
+
+
 // //erroneous tests, should cause error so comment when not using
 
 
@@ -273,3 +295,25 @@ TEST_CASE("new normalise test", "[vector3]") {
 
 //     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(v1.v[0], 1e-6)); 
 // }
+
+// TEST_CASE("Test erroneous squared vector method","[vector3]") {
+//     Vector3 v1(a);
+
+//     v1.squared();
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(1.0, 1e-6));
+//     REQUIRE_THAT(v1.v[1], Catch::Matchers::WithinAbs(4.0, 1e-6));
+//     REQUIRE_THAT(v1.v[2], Catch::Matchers::WithinAbs(9.0, 1e-6));
+// }
+
+// TEST_CASE("Test erroneous squared vector method w result","[vector3]") {
+//     Vector3 v1(1.0, 2.0, 3.0);
+//     floating result = 1.0;
+
+//     v1.squared(result);
+
+//     REQUIRE_THAT(v1.v[0], Catch::Matchers::WithinAbs(1.0, 1e-6));
+//     REQUIRE_THAT(v1.v[1], Catch::Matchers::WithinAbs(4.0, 1e-6));
+//     REQUIRE_THAT(v1.v[2], Catch::Matchers::WithinAbs(9.0, 1e-6));
+// }
+
