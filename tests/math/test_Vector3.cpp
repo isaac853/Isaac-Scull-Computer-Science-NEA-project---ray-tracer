@@ -156,7 +156,12 @@ TEST_CASE("Test squared vector method w result","[vector3]") {
     REQUIRE_THAT(result.v[2], Catch::Matchers::WithinAbs(9.0, 1e-6));
 }
 
-
+TEST_CASE("Test lengthsquared vector method","[vector3]") {
+    Vector3 v1(1.0, 2.0, 3.0);
+    floating length;
+    length = v1.lengthSquared();
+    REQUIRE_THAT(length, Catch::Matchers::WithinAbs(14.0, 1e-6));
+}
 
 // //erroneous tests, should cause error so comment when not using
 
@@ -317,3 +322,9 @@ TEST_CASE("new normalise test", "[vector3]") {
 //     REQUIRE_THAT(v1.v[2], Catch::Matchers::WithinAbs(9.0, 1e-6));
 // }
 
+// TEST_CASE("Test erroneous lengthsquared vector method","[vector3]") {
+//     Vector3 v1(a);
+//     floating length;
+//     length = v1.lengthSquared();
+//     REQUIRE_THAT(length, Catch::Matchers::WithinAbs(14.0, 1e-6));
+// }
