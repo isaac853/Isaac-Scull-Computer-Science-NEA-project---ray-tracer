@@ -8,10 +8,13 @@ namespace isaac::math {
         public:
 
         inline floating intersects(Vector3 &start, Vector3 &dir){
+            //plane is parralel to xz plane, so sdotn and ddotn are trivial
             floating sdotn = start.v[1];
             floating ddotn = dir.v[1];
-            if(((sdotn * ddotn )> 0) || ((ddotn > -1e-10) && (ddotn < 1e-10))) return -1.0; // checks if a div by zero occurs, or if plane is behind camera or it hit back of plane
-            return -sdotn / ddotn; // TODO kill it with fire
+            
+            // checks if a div by zero occurs, or if plane is behind camera or it hit back of plane
+            if(((sdotn * ddotn )> 0) || ((ddotn > -1e-10) && (ddotn < 1e-10))) return -1.0;
+            return -sdotn / ddotn; 
         }
 };
 }

@@ -22,8 +22,10 @@ using namespace isaac::math;
         Vector3 centerToIntersection;
         center.sub(intersection, centerToIntersection);
         floating dsquared = centerToIntersection.lengthSquared();
+        //decrease brightness by square based on distance from center of light
         floating factor = dsquared * rolloff * rolloff;
         Vector3 lightColour;
+        //stop center area from getting brighter than brightness due to factor 
         colour.mul(factor < 1.0 ? brightness : brightness/factor, lightColour);
 
         Vector3 tcol;
