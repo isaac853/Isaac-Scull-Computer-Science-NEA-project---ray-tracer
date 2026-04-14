@@ -23,6 +23,7 @@
 const int CANVAS_WIDTH = 512; 
 const int CANVAS_HEIGHT = 512;
 
+
 // entry point of main
 int main(int argc, char** argv) {
     //stop the compiler complaining about unused arguments
@@ -224,17 +225,6 @@ int main(int argc, char** argv) {
             // samples per pixel slider
             ImGui::SliderInt("samples/pixel", &samplesPerPixel, 1, 32);
             
-            ImGui::SameLine();
-
-            (ImGui::Button("?", ImVec2(0, 0)));
-
-
-            if (ImGui::IsItemHovered())
-            {
-                ImGui::SetTooltip("this will change the number of rays cast per pixel, \n increasing this should increase the quality");
-            }
-
-
             // bounce slider
             ImGui::SliderInt("no. of bounces", &rayTracer.maxDepth, 1, 32);
 
