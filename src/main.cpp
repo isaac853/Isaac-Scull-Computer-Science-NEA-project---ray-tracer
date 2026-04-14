@@ -23,6 +23,19 @@
 const int CANVAS_WIDTH = 512; 
 const int CANVAS_HEIGHT = 512;
 
+// defaults colours outside 0-1 range to max/min values
+inline float colrangecheck(float colour){
+    if (colour >= 1.0) 
+    {return 1.0;}
+    
+    if (colour <= 0.0) 
+    {return 0.0;}
+
+    return colour;
+
+}
+
+
 //adds a text bubble with given paragraph on the end of line above
 inline void helpText(const char* text){
 
@@ -259,6 +272,7 @@ int main(int argc, char** argv) {
 
             helpText("This will change the colour of the background of this window.");
 
+            //light color picker
             ImGui::ColorEdit4("light Color", (float*)&lightColour);
 
             helpText("This will change the colour of the light in the ray tracer.");
@@ -267,7 +281,7 @@ int main(int argc, char** argv) {
             ImGui::End(); // stop talking about it
             }
             
-           ImGui::Text("FPS: %.1f", io.Framerate);
+           //ImGui::Text("FPS: %.1f", io.Framerate);
 
         // Canvas drawing window
         {
@@ -299,13 +313,14 @@ int main(int argc, char** argv) {
                             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
                             
                             // Copy gui state to the ray tracer
-                            rayTracer.skyColour.v[0] = (double)skyColour.x;
-                            rayTracer.skyColour.v[1] = (double)skyColour.y;
-                            rayTracer.skyColour.v[2] = (double)skyColour.z;
+                            rayTracer.skyColour.v[0] = (double)colrangecheck(skyColour.x);
+                            rayTracer.skyColour.v[1] = (double)colrangecheck(skyColour.y);
+                            rayTracer.skyColour.v[2] = (double)colrangecheck(skyColour.z);
                             
-                            lightColour_v.v[0] = (double)lightColour.x;
-                            lightColour_v.v[1] = (double)lightColour.y;
-                            lightColour_v.v[2] = (double)lightColour.z;
+                            lightColour_v.v[0] = (double)colrangecheck(lightColour.x);
+                            lightColour_v.v[1] = (double)colrangecheck(lightColour.y);
+                            lightColour_v.v[2] = (double)colrangecheck(lightColour.z);
+
                             rlp.setcolour(lightColour_v);
                             
                             // More stuff you have to do to render a frame.
