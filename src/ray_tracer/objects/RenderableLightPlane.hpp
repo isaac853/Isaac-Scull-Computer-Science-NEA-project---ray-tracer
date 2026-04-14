@@ -15,6 +15,10 @@ class RenderableLightPlane : public Renderable {
     RenderableLightPlane(Transform& t, floating brightness, floating rolloff, Vector3& colour);
     virtual floating intersectsObject(Vector3& start, Vector3& dir);
 
+    inline void setcolour(Vector3& kolour){
+        colour = kolour;
+    }
+
     virtual void render(RayTracer& ray_tracer, Vector3& start, Vector3& dir, floating dist, Vector3& colour, int remainingDepth);
 };
 }  // namespace isaac::ray_tracer

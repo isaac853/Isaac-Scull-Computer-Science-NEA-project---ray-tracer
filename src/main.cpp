@@ -23,6 +23,19 @@
 const int CANVAS_WIDTH = 512; 
 const int CANVAS_HEIGHT = 512;
 
+//adds a text bubble with given paragraph on the end of line above
+inline void helpText(const char* text){
+
+            ImGui::SameLine();
+            //bubble creation, set to button because it reacts to being hovered over
+            (ImGui::Button("?", ImVec2(0, 0)));
+
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::SetTooltip(text);
+            }
+}
+
 
 // entry point of main
 int main(int argc, char** argv) {
@@ -91,6 +104,10 @@ int main(int argc, char** argv) {
     // sky colour, defaults to grey
     ImVec4 skyColour = ImVec4(35.0/255.0, 35.0/255.0, 35.0/255.0, 1.00f);
     
+    //light colour, defaults to green
+    ImVec4 lightColour = ImVec4(0.1f, 1.0f, 0.10f, 1.00f);
+    isaac::math::Vector3 lightColour_v;
+
     // Canvas setup
     GlPixelCanvas canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     canvas.Clear(32, 32, 64); // Dark blue background
@@ -225,14 +242,26 @@ int main(int argc, char** argv) {
             // samples per pixel slider
             ImGui::SliderInt("samples/pixel", &samplesPerPixel, 1, 32);
             
+            helpText("This will change the number of rays cast per pixel.\nThe pixel will take the average colour of these rays.\nIncreasing this will improve the quality of the image, at the cost of performance.");
+
             // bounce slider
             ImGui::SliderInt("no. of bounces", &rayTracer.maxDepth, 1, 32);
+            
+            helpText("This will increase the number of times each ray can bounce before being deleted.\nIncreasing this will improve the depth of reflections at the cost of performance.");
 
             //sky Color picker
             ImGui::ColorEdit4("sky colour", (float*)&skyColour);
 
+            helpText("This will change the colour of the sky in the world of the raytracer.");
+
             // Color picker
-            ImGui::ColorEdit4("Clear Color", (float*)&clear_color);
+            ImGui::ColorEdit4("window Color", (float*)&clear_color);
+
+            helpText("This will change the colour of the background of this window.");
+
+            ImGui::ColorEdit4("light Color", (float*)&lightColour);
+
+            helpText("This will change the colour of the light in the ray tracer.");
 
             ImGui::Separator();
             ImGui::End(); // stop talking about it
@@ -273,6 +302,11 @@ int main(int argc, char** argv) {
                             rayTracer.skyColour.v[0] = (double)skyColour.x;
                             rayTracer.skyColour.v[1] = (double)skyColour.y;
                             rayTracer.skyColour.v[2] = (double)skyColour.z;
+                            
+                            lightColour_v.v[0] = (double)lightColour.x;
+                            lightColour_v.v[1] = (double)lightColour.y;
+                            lightColour_v.v[2] = (double)lightColour.z;
+                            rlp.setcolour(lightColour_v);
                             
                             // More stuff you have to do to render a frame.
                             SDL_GL_SwapWindow(win);
