@@ -26,11 +26,11 @@ using namespace isaac::math;
         floating y = scale * transint.v[2];
 
         //fix for middle range issue
-        // int64_t xi = x < 0.0 ? (int64_t)(x - 0.5): (int64_t)(x + 0.5);
-        // int64_t yi = y < 0.0 ? (int64_t)(y - 0.5): (int64_t)(y + 0.5);
+        int64_t xi = x < 0.0 ? (int64_t)(x - 0.5): (int64_t)(x + 0.5);
+        int64_t yi = y < 0.0 ? (int64_t)(y - 0.5): (int64_t)(y + 0.5);
 
-        int64_t xi = (int64_t)x;
-        int64_t yi = (int64_t)y;
+        // int64_t xi = (int64_t)x;
+        // int64_t yi = (int64_t)y;
 
         Vector3 reflectedColour;
         Vector3 reflectedDir;

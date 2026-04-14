@@ -201,42 +201,54 @@ int main(int argc, char** argv) {
             //Render Button 
             if (ImGui::Button("Render", ImVec2(0, 0))) {
                 // Render a frame
-                //for now just output a message
-                std::cout << "Render button pressed\n";
+                camera.render(
+                    canvas,
+                    samplesPerPixel,
+                    //function given to cameras render method to handle each pixel
+                    //captures ray tracer from current scope by ref
+                    [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
+                            rayTracer.render(dir, colour);
+                        }
+                    );                    
+                }
 
-                canvas.forEach(
-                [&](int x, int y, int w, int h, uint8_t &r, uint8_t &g, uint8_t &b) {
-                    r = x & 255;
-                    b = y & 255;
-                    g = (x + y) & 255; 
-                    
-                    }
-                );
-            }
-            
+            ImGui::SameLine();
+
             if (ImGui::Button("Clear Canvas", ImVec2(0, 0))) {
                 // Render a frame
                 //for now just output a message
                 std::cout << "Clear button pressed\n";
                 canvas.Clear(32, 32, 64);// sets the canvas to dark blue
             }             
+            
+            // samples per pixel slider
+            ImGui::SliderInt("samples/pixel", &samplesPerPixel, 1, 32);
+            
+            ImGui::SameLine();
 
+            (ImGui::Button("?", ImVec2(0, 0)));
+
+
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::SetTooltip("this will change the number of rays cast per pixel, \n increasing this should increase the quality");
+            }
+
+
+            // bounce slider
+            ImGui::SliderInt("no. of bounces", &rayTracer.maxDepth, 1, 32);
+
+            //sky Color picker
+            ImGui::ColorEdit4("sky colour", (float*)&skyColour);
+
+            // Color picker
+            ImGui::ColorEdit4("Clear Color", (float*)&clear_color);
+
+            ImGui::Separator();
             ImGui::End(); // stop talking about it
             }
-            // // samples per pixel slider
-            // ImGui::SliderInt("samples/pixel", &samplesPerPixel, 1, 32);
             
-            // // bounce slider
-            // ImGui::SliderInt("no. of bounces", &rayTracer.maxDepth, 1, 32);
-
-            // //sky Color picker
-            // ImGui::ColorEdit4("sky colour", (float*)&skyColour);
-
-            // // Color picker
-            // ImGui::ColorEdit4("Clear Color", (float*)&clear_color);
-
-            // ImGui::Separator();
-//            ImGui::Text("FPS: %.1f", io.Framerate);
+           ImGui::Text("FPS: %.1f", io.Framerate);
 
         // Canvas drawing window
         {
@@ -252,26 +264,7 @@ int main(int argc, char** argv) {
             ImGui::Image((void*)(intptr_t)canvas.get_texture_id(), ImVec2(CANVAS_WIDTH, CANVAS_HEIGHT), ImVec2(0, 1), ImVec2(1, 0));
             
             ImGui::Separator();
-            
-            // Render Button 
-            if (ImGui::Button("Render", ImVec2(0, 0))) {
-                    // Render a frame
-                    camera.render(
-                            canvas,
-                            samplesPerPixel,
-                            //function given to cameras render method to handle each pixel
-                            //captures ray tracer from current scope by ref
-                            [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
-                                    rayTracer.render(dir, colour);
-                                }
-                            );                    
-                        }
-                        ImGui::SameLine();
-                        
-                        //clear button
-                        if (ImGui::Button("Clear Canvas##btn")) {
-                                canvas.Clear(32, 32, 64);
-                            }
+
                             
                             ImGui::End();
                         }
