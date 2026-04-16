@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstddef>
-#include <iostream>
+#include <cstddef>  //allows std functions
+#include <iostream> //allows cout
 
 #include "mathtypes.hpp"
 #include "Matrix4x3.hpp"
@@ -11,7 +11,7 @@ namespace isaac::math
     class Vector3
     {
     public:
-        floating v[3];
+        floating v[3]; // attribute definition, put in public for ease of use
 
         /// @brief Default constructor initializes to zero vector
         Vector3()
@@ -47,7 +47,7 @@ namespace isaac::math
             return result;
         }
 
-        /// @brief multiply vector with another vector
+        /// @brief multiply vector with a scalar
         /// @param vec Other vector
         /// @param result Resulting Vector3
         Vector3 &mul(floating scalar, Vector3 &result)
@@ -139,7 +139,7 @@ namespace isaac::math
         /// @param result Resulting Vector3
         Vector3 &mul(Matrix4x3 &m, Vector3 &result)
         {
-            const floating(&r)[4][3] = m.v;
+            const floating(&r)[4][3] = m.v; //r copies v's values
 
             const floating v0 =
                 r[0][0] * v[0] +
@@ -212,7 +212,7 @@ namespace isaac::math
         
         /// @brief make vector into unit vector
         /// @param result Resulting Vector3
-        Vector3 &normalise(Vector3 &result)
+        Vector3 &normalise(Vector3 &result, bool &error)
         {   //asigned to existing memory locations for faster performance
 
             const floating length = sqrt((v[0]*v[0]) + (v[1]*v[1]) + (v[2]*v[2]));
@@ -228,13 +228,25 @@ namespace isaac::math
             result.v[1] = v1;
             result.v[2] = v2;
 
+            error = length == 0.0;
+
+
             return result;
         }
+
+        /// @brief make vector into unit vector
+        /// @param result Resulting Vector3
+        Vector3 &normalise(Vector3 &result){
+            bool error;
+            return normalise(result, error);
+        }
+
 
         Vector3 &normalise() {
             return normalise(*this);
         }
 
+        // =
         inline Vector3& operator=(const Vector3& other){
             v[0] = other.v[0];
             v[1] = other.v[1];
@@ -255,8 +267,7 @@ namespace isaac::math
             return squared(*this);
         }
 
-        // TODO Comment me
-        // Just do the vetor rotation (not translation)
+        // Just do the vector rotation (not translation)
         // Useful for transforming direction vectors
         Vector3 rot( Matrix4x3& m, Vector3& result )
         {
@@ -293,14 +304,6 @@ namespace isaac::math
     // ---------------------------------------------------------------------------------------------------------
     }; //end of Vector3
 
-    // Why should I use <iostream> instead of the traditional <cstdio>?
-    //
-    // Increase type safety, reduce errors, allow extensibility, and provide inheritability. printf() is arguably not broken, and scanf() is perhaps livable despite being error prone, however both are limited with respect to what C++ I/O can do. C++ I/O (using << and >>) is, relative to C (using printf() and scanf()).
-    //
-    // More type-safe: With <iostream>, the type of object being I/O'd is known statically by the compiler. In contrast, uses "%" fields to figure out the types dynamically.
-    // Less error prone: With <iostream>, there are no redundant "%" tokens that have to be consistent with the actual objects being I/O'd. Removing redundancy removes a class of errors.
-    // Extensible: The C++ <iostream> mechanism allows new user-defined types to be I/O'd without breaking existing code. Imagine the chaos if everyone was simultaneously adding new incompatible "%" fields to printf() and scanf()?!
-    // Inheritable: The C++ <iostream> mechanism is built from real classes such as std::ostream and std::istream. Unlike <cstdio>'s FILE*, these are real classes and hence inheritable. This means you can have other user-defined things that look and act like streams, yet that do whatever strange and wonderful things you want. You automatically get to use the zillions of lines of I/O code written by users you don't even know, and they don't need to know about your "extended stream" class.
     inline std::ostream& operator<<(std::ostream& os, const Vector3& v) {
         os 
             << "(" 

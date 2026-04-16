@@ -12,7 +12,7 @@ namespace isaac::ray_tracer{
             // TODO we almost certainly don't want to keep all of these on the class
             // TODO but lets remove them when we are sure we don't need them any more
             Transform t_f; // Forward quaternion transform
-            Transform t_i; // Inverse quaternion transfrom
+            Transform t_i; // Inverse quaternion transform
             Matrix4x3 m_f; // Forward matrix transform
             Matrix4x3 m_i; // Inverse matrix transform
         public:

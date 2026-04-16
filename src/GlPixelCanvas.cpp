@@ -1,12 +1,14 @@
 #include "GlPixelCanvas.hpp"
 
+//constructor
 GlPixelCanvas::GlPixelCanvas(int w, int h) : PixelCanvas(w, h), texture_id(0) {
     CreateTexture();
 }
 
+//destructor
 GlPixelCanvas::~GlPixelCanvas() {
-    if (texture_id != 0) {
-        glDeleteTextures(1, &texture_id);
+    if (texture_id != 0) { // if texture fails, delete that texture
+        glDeleteTextures(1, &texture_id);//& means that the paramater has been passed by reference
     }
 }
 

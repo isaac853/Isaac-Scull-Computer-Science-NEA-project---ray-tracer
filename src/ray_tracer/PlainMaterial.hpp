@@ -34,14 +34,14 @@ class PlainMaterial {
         inline void colourCombine(Vector3 &incident, Vector3 &normal, Vector3 &dir, Vector3 &result){
             const floating factor = ambientFactor(normal, dir);
             // incident light times colour + colour times ambient factor
-            Vector3 part1;
-            incident.mul(colour, part1);
-            part1.mul(reflectivity, part1);
+            Vector3 incoming;
+            incident.mul(colour, incoming);
+            incoming.mul(reflectivity, incoming);
 
-            Vector3 part2;
-            colour.mul(factor, part2);
+            Vector3 absorbed;
+            colour.mul(factor, absorbed);
 
-            part1.add(part2, result);
+            incoming.add(absorbed, result);
         }
         inline PlainMaterial& operator=(const PlainMaterial& other){
             smoothness = other.smoothness;
