@@ -2,6 +2,7 @@
 #define SDL_MAIN_HANDLED
 
 //imports
+#include <chrono>
 #include <iostream>
 #include <vector>
 #include <cstring>
@@ -190,6 +191,9 @@ int main(int argc, char** argv) {
     rayTracer.add(&rcp);
     rayTracer.add(&rlp);
 
+    //initialise timetaken variable outside runtime
+    double timetaken = 0.0;
+
     // Main loop
     // library updates window every frame
     bool running = true; //exit condition for run loop
@@ -228,9 +232,11 @@ int main(int argc, char** argv) {
             
             ImGui::Text("These are the parameters of the ray tracer."); // text will appear at the top of the tab
             ImGui::Separator(); //linebreak
-            
+
             //Render Button 
             if (ImGui::Button("Render", ImVec2(0, 0))) {
+                //find intialtime
+                auto inittime = std::chrono::high_resolution_clock::now();
                 // Render a frame
                 camera.render(
                     canvas,
@@ -240,7 +246,12 @@ int main(int argc, char** argv) {
                     [&](isaac::math::Vector3& dir, isaac::math::Vector3& colour, int x, int y){
                             rayTracer.render(dir, colour);
                         }
-                    );                    
+                    );
+                //find difference between initialtime and endtime and cast to double
+                auto endtime = std::chrono::high_resolution_clock::now();
+                auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(endtime - inittime).count();
+                timetaken = (double)ms / 1000.0;    
+
                 }
 
             ImGui::SameLine();
@@ -251,7 +262,10 @@ int main(int argc, char** argv) {
                 std::cout << "Clear button pressed\n";
                 canvas.Clear(32, 32, 64);// sets the canvas to dark blue
             }             
-            
+            //output time taken to render the frame
+            ImGui::SameLine();         
+            ImGui::Text("render time: %.3fs", timetaken);
+                
             // samples per pixel slider
             ImGui::SliderInt("samples/pixel", &samplesPerPixel, 1, 32);
             
@@ -277,11 +291,11 @@ int main(int argc, char** argv) {
 
             helpText("This will change the colour of the light in the ray tracer.");
 
+            // ImGui::Text("FPS: %.1f", io.Framerate);
             ImGui::Separator();
             ImGui::End(); // stop talking about it
             }
             
-           //ImGui::Text("FPS: %.1f", io.Framerate);
 
         // Canvas drawing window
         {

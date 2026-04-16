@@ -26,15 +26,15 @@ set(extra_sources
   src/ray_tracer/Renderable.cpp
   src/ray_tracer/objects/RenderableSphere.cpp
 )
-
+ 
 # App target
 add_executable(cpp_renderer
   ${extra_sources}
   src/GlPixelCanvas.cpp
   src/main.cpp
 )
-target_compile_options(cpp_renderer PRIVATE -g -O0)
-#target_compile_options(cpp_renderer PRIVATE -O2)
+# target_compile_options(cpp_renderer PRIVATE -g -O0)
+target_compile_options(cpp_renderer PRIVATE -O2)
 target_compile_features(cpp_renderer PRIVATE cxx_std_17)
 
 # Find SDL2 from the specified version
